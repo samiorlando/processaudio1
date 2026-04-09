@@ -168,58 +168,6 @@ body {
   margin-bottom: 10px;
   text-align: center;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-/* BYPASS BUTTON */
-.bypass-btn {
-  padding: 3px 10px;
-  background: #222;
-  border: 1px solid #444;
-  color: var(--text-secondary);
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.bypass-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.3s ease;
-}
-
-.bypass-btn:hover::before {
-  left: 100%;
-}
-
-.bypass-btn.active {
-  background: rgba(255,51,51,0.2);
-  border-color: var(--accent-red);
-  color: var(--accent-red);
-  box-shadow: 0 0 8px rgba(255,51,51,0.4);
-  animation: bypassPulse 1.5s infinite;
-}
-
-@keyframes bypassPulse {
-  0%, 100% { box-shadow: 0 0 8px rgba(255,51,51,0.4); }
-  50% { box-shadow: 0 0 15px rgba(255,51,51,0.7); }
-}
-
-.bypass-btn:not(.active):hover {
-  border-color: var(--accent-amber);
 }
 
 /* KNOB STYLES */
@@ -400,7 +348,6 @@ body {
   border-radius: 8px;
   padding: 12px;
   position: relative;
-  transition: all 0.3s ease;
 }
 
 .dsp-panel::before {
@@ -413,15 +360,6 @@ body {
   background: linear-gradient(90deg, transparent, rgba(57,255,20,0.2), transparent);
 }
 
-.dsp-panel.bypassed {
-  opacity: 0.6;
-  border-color: #444;
-}
-
-.dsp-panel.bypassed::before {
-  background: linear-gradient(90deg, transparent, rgba(255,51,51,0.2), transparent);
-}
-
 .dsp-panel-title {
   font-size: 10px;
   text-transform: uppercase;
@@ -430,7 +368,6 @@ body {
   margin-bottom: 8px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 8px;
 }
 
@@ -440,19 +377,6 @@ body {
   border-radius: 50%;
   background: var(--accent-green);
   box-shadow: 0 0 6px rgba(57,255,20,0.5);
-  transition: all 0.3s ease;
-}
-
-.dsp-panel.bypassed .status-dot {
-  background: var(--accent-red);
-  box-shadow: 0 0 6px rgba(255,51,51,0.5);
-  animation: bypassFlash 0.5s ease;
-}
-
-@keyframes bypassFlash {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.3); }
-  100% { transform: scale(1); }
 }
 
 .knobs-grid {
@@ -479,12 +403,6 @@ body {
   border-radius: 6px;
   padding: 8px;
   margin-bottom: 8px;
-  transition: all 0.2s ease;
-}
-
-.band-section.bypassed {
-  opacity: 0.5;
-  border-color: #333;
 }
 
 .band-title {
@@ -494,10 +412,6 @@ body {
   letter-spacing: 1px;
   margin-bottom: 6px;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
 }
 
 /* BUTTONS */
