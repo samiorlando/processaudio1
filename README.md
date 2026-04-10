@@ -369,6 +369,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .dsp-panel-title .status-dot {
@@ -377,6 +378,35 @@ body {
   border-radius: 50%;
   background: var(--accent-green);
   box-shadow: 0 0 6px rgba(57,255,20,0.5);
+}
+
+/* BYPASS BUTTON STYLES */
+.dsp-panel-title .bypass-btn {
+  margin-left: auto;
+  padding: 4px 12px;
+  background: rgba(255,51,51,0.15);
+  border: 1px solid var(--accent-red);
+  color: var(--accent-red);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+}
+
+.dsp-panel-title .bypass-btn:hover {
+  border-color: var(--accent-amber);
+  background: rgba(255,183,0,0.15);
+  color: var(--accent-amber);
+}
+
+.dsp-panel-title .bypass-btn.active {
+  background: rgba(57,255,20,0.2);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  box-shadow: 0 0 8px rgba(57,255,20,0.3);
 }
 
 .knobs-grid {
@@ -703,6 +733,21 @@ body {
 .status-bar .indicator.green { background: var(--accent-green); }
 .status-bar .indicator.amber { background: var(--accent-amber); }
 .status-bar .indicator.red { background: var(--accent-red); }
+
+/* BYPASS INDICATOR */
+.bypass-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 4px;
+  background: var(--accent-red);
+  box-shadow: 0 0 4px rgba(255,51,51,0.5);
+}
+.bypass-indicator.active {
+  background: var(--accent-green);
+  box-shadow: 0 0 4px rgba(57,255,20,0.5);
+}
 </style>
 </head>
 <body>
@@ -844,67 +889,67 @@ body {
   </div>
 
   <!-- EQ PANEL -->
-  <div class="dsp-panel" id="eqPanel">
+  <div class="dsp-panel">
     <div class="dsp-panel-title">
-      <span><span class="status-dot"></span>Ecualizador Paramétrico 6 Bandas</span>
-      <button class="bypass-btn" data-bypass="eq">Bypass</button>
+      <span class="status-dot"></span>Ecualizador Paramétrico 6 Bandas
+      <button class="bypass-btn" data-module="eq">BYPASS</button>
     </div>
     <canvas class="eq-display" id="eqCanvas"></canvas>
     <div class="knobs-grid" id="eqKnobs"></div>
   </div>
 
   <!-- AGC PANEL -->
-  <div class="dsp-panel" id="agcPanel">
+  <div class="dsp-panel">
     <div class="dsp-panel-title">
-      <span><span class="status-dot"></span>AGC - Automatic Gain Control</span>
-      <button class="bypass-btn" data-bypass="agc">Bypass</button>
+      <span class="status-dot"></span>AGC - Automatic Gain Control
+      <button class="bypass-btn active" data-module="agc">ACTIVE</button>
     </div>
     <div class="knobs-grid" id="agcKnobs"></div>
     <div class="gr-meter"><div class="gr-meter-fill" id="agcGrMeter"></div></div>
   </div>
 
   <!-- MULTIBAND COMPRESSOR (4 bands) -->
-  <div class="dsp-panel" id="multiband4Panel">
+  <div class="dsp-panel">
     <div class="dsp-panel-title">
-      <span><span class="status-dot"></span>Multiband Compressor (4 Bandas)</span>
-      <button class="bypass-btn" data-bypass="multiband4">Bypass</button>
+      <span class="status-dot"></span>Multiband Compressor (4 Bandas)
+      <button class="bypass-btn active" data-module="multiband4">ACTIVE</button>
     </div>
     <div id="multiband4Knobs"></div>
   </div>
 
   <!-- 3-BAND COMPRESSOR -->
-  <div class="dsp-panel" id="comp3Panel">
+  <div class="dsp-panel">
     <div class="dsp-panel-title">
-      <span><span class="status-dot"></span>Compresor 3 Bandas</span>
-      <button class="bypass-btn" data-bypass="comp3">Bypass</button>
+      <span class="status-dot"></span>Compresor 3 Bandas
+      <button class="bypass-btn active" data-module="comp3">ACTIVE</button>
     </div>
     <div id="comp3Knobs"></div>
   </div>
 
   <!-- BAND LIMITER 3 BANDAS -->
-  <div class="dsp-panel" id="limiter3Panel">
+  <div class="dsp-panel">
     <div class="dsp-panel-title">
-      <span><span class="status-dot"></span>Band Limiter 3 Bandas</span>
-      <button class="bypass-btn" data-bypass="limiter3">Bypass</button>
+      <span class="status-dot"></span>Band Limiter 3 Bandas
+      <button class="bypass-btn active" data-module="limiter3">ACTIVE</button>
     </div>
     <div id="limiter3Knobs"></div>
   </div>
 
   <!-- FINAL LIMITER -->
-  <div class="dsp-panel" id="finalLimiterPanel">
+  <div class="dsp-panel">
     <div class="dsp-panel-title">
-      <span><span class="status-dot"></span>Limiter Final</span>
-      <button class="bypass-btn" data-bypass="finalLimiter">Bypass</button>
+      <span class="status-dot"></span>Limiter Final
+      <button class="bypass-btn active" data-module="finalLimiter">ACTIVE</button>
     </div>
     <div class="knobs-grid" id="finalLimiterKnobs"></div>
     <div class="gr-meter"><div class="gr-meter-fill" id="limGrMeter"></div></div>
   </div>
 
   <!-- POWER LIMITER -->
-  <div class="dsp-panel" id="powerLimiterPanel">
+  <div class="dsp-panel">
     <div class="dsp-panel-title">
-      <span><span class="status-dot"></span>Power Limiter</span>
-      <button class="bypass-btn" data-bypass="powerLimiter">Bypass</button>
+      <span class="status-dot"></span>Power Limiter
+      <button class="bypass-btn active" data-module="powerLimiter">ACTIVE</button>
     </div>
     <div class="knobs-grid" id="powerLimiterKnobs"></div>
     <div class="gr-meter"><div class="gr-meter-fill" id="powLimGrMeter"></div></div>
@@ -912,10 +957,10 @@ body {
 
   <!-- PRE-EMPHASIS & STEREO -->
   <div class="dsp-row">
-    <div class="dsp-panel" id="preEmphasisPanel">
+    <div class="dsp-panel">
       <div class="dsp-panel-title">
-        <span><span class="status-dot"></span>Pre-Emphasis</span>
-        <button class="bypass-btn" data-bypass="preEmphasis">Bypass</button>
+        <span class="status-dot"></span>Pre-Emphasis
+        <button class="bypass-btn active" data-module="preEmphasis">ACTIVE</button>
       </div>
       <div class="knobs-grid">
         <div class="knob-container">
@@ -935,7 +980,9 @@ body {
       </div>
     </div>
     <div class="dsp-panel">
-      <div class="dsp-panel-title"><span class="status-dot"></span>Stereo Mode</div>
+      <div class="dsp-panel-title">
+        <span class="status-dot"></span>Stereo Mode
+      </div>
       <div class="mode-selector" style="margin-bottom:10px;">
         <button class="mode-btn active" data-mode="stereo">Stereo</button>
         <button class="mode-btn" data-mode="mono">Mono</button>
@@ -1056,7 +1103,7 @@ body {
 <script>
 // ============================================================
 // OptiMod Pro 1600 - Broadcast Audio Processor
-// Complete DSP Engine + UI (CORREGIDO)
+// Complete DSP Engine + UI with BYPASS controls
 // ============================================================
 
 class BroadcastProcessor {
@@ -1068,16 +1115,6 @@ class BroadcastProcessor {
     this.sampleRate = 48000;
     this.bufferSize = 256;
     this.params = {};
-    this.bypassStates = {
-      eq: false,
-      agc: false,
-      multiband4: false,
-      comp3: false,
-      limiter3: false,
-      finalLimiter: false,
-      powerLimiter: false,
-      preEmphasis: false
-    };
     this.meters = { inputL: 0, inputR: 0, outputL: 0, outputR: 0 };
     this.peaks = { inputL: 0, inputR: 0, outputL: 0, outputR: 0 };
     this.peakHold = { inputL: 0, inputR: 0, outputL: 0, outputR: 0 };
@@ -1090,10 +1127,10 @@ class BroadcastProcessor {
     
     this.initDefaultParams();
     this.initUI();
+    this.initBypassButtons();
     this.initKnobs();
     this.initSpectrum();
     this.initEQDisplay();
-    this.initBypassButtons();
     this.loadPreset('fm-hot');
   }
 
@@ -1105,6 +1142,7 @@ class BroadcastProcessor {
     
     // 6-Band EQ
     this.params.eq = [];
+    this.params.eqMaster = { enabled: true };
     const eqDefaults = [
       { type: 'highpass', freq: 40, gain: 0, q: 0.7 },
       { type: 'bell', freq: 100, gain: 0, q: 1.0 },
@@ -1134,6 +1172,7 @@ class BroadcastProcessor {
       { name: 'Mid', freq: 2500, threshold: -16, ratio: 3, attack: 8, release: 50, gain: 0, enabled: true },
       { name: 'High', freq: 8000, threshold: -14, ratio: 2.5, attack: 5, release: 40, gain: 0, enabled: true }
     ];
+    this.params.multiband4Master = { enabled: true };
 
     // 3-Band Compressor
     this.params.comp3 = [
@@ -1141,6 +1180,7 @@ class BroadcastProcessor {
       { name: 'Mid', freq: 2000, threshold: -18, ratio: 3.5, attack: 10, release: 60, gain: 0, enabled: true },
       { name: 'High', freq: 8000, threshold: -15, ratio: 3, attack: 5, release: 40, gain: 0, enabled: true }
     ];
+    this.params.comp3Master = { enabled: true };
 
     // 3-Band Limiter
     this.params.limiter3 = [
@@ -1148,6 +1188,7 @@ class BroadcastProcessor {
       { name: 'Mid', freq: 2000, threshold: -3, ratio: 20, attack: 1, release: 40, gain: 0, enabled: true },
       { name: 'High', freq: 8000, threshold: -3, ratio: 20, attack: 0.5, release: 30, gain: 0, enabled: true }
     ];
+    this.params.limiter3Master = { enabled: true };
 
     // Final Limiter
     this.params.finalLimiter = { threshold: -1, ratio: 20, attack: 0.5, release: 50, gain: 0, enabled: true };
@@ -1156,9 +1197,8 @@ class BroadcastProcessor {
     this.params.powerLimiter = { threshold: -0.5, ratio: 30, attack: 0.1, release: 20, gain: 0, enabled: true };
 
     // Pre-Emphasis
-    this.params.preEmphasis = 0;
-    this.params.preEmphasisGain = 0;
-
+    this.params.preEmphasis = { time: 0, gain: 0, enabled: true };
+    
     // Output
     this.params.outputGain = 0;
     this.params.outputLimit = 100;
@@ -1251,7 +1291,6 @@ class BroadcastProcessor {
       document.getElementById('powerBtn').classList.add('active');
       
       this.sendAllParams();
-      this.sendBypassStates();
 
     } catch (err) {
       console.error('Audio init error:', err);
@@ -1267,6 +1306,16 @@ class BroadcastProcessor {
         this.sampleRate = options.sampleRate || 48000;
         this.blockSize = 128;
         
+        // Master bypass flags
+        this.eqMasterEnabled = true;
+        this.agcEnabled = true;
+        this.multiband4MasterEnabled = true;
+        this.comp3MasterEnabled = true;
+        this.limiter3MasterEnabled = true;
+        this.finalLimiterEnabled = true;
+        this.powerLimiterEnabled = true;
+        this.preEmphasisEnabled = true;
+        
         // DSP State
         this.params = {};
         this.inputGain = 1.0;
@@ -1275,18 +1324,6 @@ class BroadcastProcessor {
         this.stereoWidth = 1.0;
         this.stereoBalance = 0.0;
         this.stereoMode = 0;
-        
-        // Bypass states
-        this.bypass = {
-          eq: false,
-          agc: false,
-          multiband4: false,
-          comp3: false,
-          limiter3: false,
-          finalLimiter: false,
-          powerLimiter: false,
-          preEmphasis: false
-        };
         
         // EQ State (6 bands)
         this.eqFilters = [];
@@ -1329,7 +1366,7 @@ class BroadcastProcessor {
         this.powerLimiter = { threshold: -0.5, ratio: 30, attack: 0.1, release: 20, gain: 0, envelope: 0, g: 1.0 };
         
         // Pre-emphasis
-        this.preEmphasis = 0;
+        this.preEmphasisTime = 0;
         this.preEmphasisGain = 0;
         this.preEmphState = 0;
         
@@ -1350,61 +1387,46 @@ class BroadcastProcessor {
         // Anti-clip
         this.antiClipEnabled = true;
         
-        // Frame counter
         this.meterUpdateInterval = Math.floor(this.sampleRate / 30);
         this.frameCounter = 0;
-        
-        // Parameter smoothing
-        this.smoothedParams = {};
         
         this.port.onmessage = (e) => this.handleMessage(e.data);
       }
       
       handleMessage(data) {
         switch(data.type) {
-          case 'param':
-            this.setParam(data.key, data.value);
-            break;
-          case 'eq':
-            this.setEQ(data.index, data.param, data.value);
-            break;
-          case 'agc':
-            Object.assign(this.agcState, data.params);
-            break;
+          case 'param': this.setParam(data.key, data.value); break;
+          case 'eq': this.setEQ(data.index, data.param, data.value); break;
+          case 'agc': Object.assign(this.agcState, data.params); break;
           case 'multiband4':
-            if (this.multiband4[data.index]) {
-              Object.assign(this.multiband4[data.index], data.params);
-              this.initCrossovers4();
-            }
+            if (this.multiband4[data.index]) Object.assign(this.multiband4[data.index], data.params);
+            this.initCrossovers4();
             break;
+          case 'multiband4Master': this.multiband4MasterEnabled = data.enabled; break;
           case 'comp3':
-            if (this.comp3[data.index]) {
-              Object.assign(this.comp3[data.index], data.params);
-              this.initCrossovers3('comp3');
-            }
+            if (this.comp3[data.index]) Object.assign(this.comp3[data.index], data.params);
+            this.initCrossovers3('comp3');
             break;
+          case 'comp3Master': this.comp3MasterEnabled = data.enabled; break;
           case 'limiter3':
-            if (this.limiter3[data.index]) {
-              Object.assign(this.limiter3[data.index], data.params);
-              this.initCrossovers3('limiter3');
-            }
+            if (this.limiter3[data.index]) Object.assign(this.limiter3[data.index], data.params);
+            this.initCrossovers3('limiter3');
             break;
-          case 'finalLimiter':
-            Object.assign(this.finalLimiter, data.params);
-            break;
-          case 'powerLimiter':
-            Object.assign(this.powerLimiter, data.params);
-            break;
-          case 'preEmphasis':
-            this.preEmphasis = data.value;
+          case 'limiter3Master': this.limiter3MasterEnabled = data.enabled; break;
+          case 'finalLimiter': Object.assign(this.finalLimiter, data.params); break;
+          case 'finalLimiterEnabled': this.finalLimiterEnabled = data.enabled; break;
+          case 'powerLimiter': Object.assign(this.powerLimiter, data.params); break;
+          case 'powerLimiterEnabled': this.powerLimiterEnabled = data.enabled; break;
+          case 'eqMaster': this.eqMasterEnabled = data.enabled; break;
+          case 'agcEnabled': this.agcEnabled = data.enabled; break;
+          case 'preEmphasis': 
+            this.preEmphasisTime = data.value;
             break;
           case 'preEmphasisGain':
             this.preEmphasisGain = data.value;
             break;
-          case 'bypass':
-            if (data.module in this.bypass) {
-              this.bypass[data.module] = data.enabled;
-            }
+          case 'preEmphasisEnabled':
+            this.preEmphasisEnabled = data.enabled;
             break;
         }
       }
@@ -1460,20 +1482,12 @@ class BroadcastProcessor {
         
         switch(eq.type) {
           case 'highpass':
-            b0 = (1 + cosW) / 2;
-            b1 = -(1 + cosW);
-            b2 = (1 + cosW) / 2;
-            a0 = 1 + alpha;
-            a1 = -2 * cosW;
-            a2 = 1 - alpha;
+            b0 = (1 + cosW) / 2; b1 = -(1 + cosW); b2 = (1 + cosW) / 2;
+            a0 = 1 + alpha; a1 = -2 * cosW; a2 = 1 - alpha;
             break;
           case 'lowpass':
-            b0 = (1 - cosW) / 2;
-            b1 = 1 - cosW;
-            b2 = (1 - cosW) / 2;
-            a0 = 1 + alpha;
-            a1 = -2 * cosW;
-            a2 = 1 - alpha;
+            b0 = (1 - cosW) / 2; b1 = 1 - cosW; b2 = (1 - cosW) / 2;
+            a0 = 1 + alpha; a1 = -2 * cosW; a2 = 1 - alpha;
             break;
           case 'highshelf':
             b0 = A * ((A + 1) + (A - 1) * cosW + 2 * sqrtA * alpha);
@@ -1492,33 +1506,20 @@ class BroadcastProcessor {
             a2 = (A + 1) + (A - 1) * cosW - 2 * sqrtA * alpha;
             break;
           default:
-            b0 = 1 + alpha * A;
-            b1 = -2 * cosW;
-            b2 = 1 - alpha * A;
-            a0 = 1 + alpha / A;
-            a1 = -2 * cosW;
-            a2 = 1 - alpha / A;
+            b0 = 1 + alpha * A; b1 = -2 * cosW; b2 = 1 - alpha * A;
+            a0 = 1 + alpha / A; a1 = -2 * cosW; a2 = 1 - alpha / A;
             break;
         }
-        
-        eq.b0 = b0 / a0;
-        eq.b1 = b1 / a0;
-        eq.b2 = b2 / a0;
-        eq.a1 = a1 / a0;
-        eq.a2 = a2 / a0;
+        eq.b0 = b0 / a0; eq.b1 = b1 / a0; eq.b2 = b2 / a0;
+        eq.a1 = a1 / a0; eq.a2 = a2 / a0;
       }
       
       processBiquad(eq, xL, xR) {
         if (!eq.enabled) return { yL: xL, yR: xR };
-        
         const yL = eq.b0 * xL + eq.b1 * eq.x1L + eq.b2 * eq.x2L - eq.a1 * eq.y1L - eq.a2 * eq.y2L;
         const yR = eq.b0 * xR + eq.b1 * eq.x1R + eq.b2 * eq.x2R - eq.a1 * eq.y1R - eq.a2 * eq.y2R;
-        
-        eq.x2L = eq.x1L; eq.x1L = xL;
-        eq.y2L = eq.y1L; eq.y1L = yL;
-        eq.x2R = eq.x1R; eq.x1R = xR;
-        eq.y2R = eq.y1R; eq.y1R = yR;
-        
+        eq.x2L = eq.x1L; eq.x1L = xL; eq.y2L = eq.y1L; eq.y1L = yL;
+        eq.x2R = eq.x1R; eq.x1R = xR; eq.y2R = eq.y1R; eq.y1R = yR;
         return { yL, yR };
       }
       
@@ -1526,10 +1527,8 @@ class BroadcastProcessor {
         const freqs = this.multiband4.map(b => b.freq);
         for (let i = 0; i < this.multiband4.length; i++) {
           const b = this.multiband4[i];
-          const lp = this.createFilter('lowpass', freqs[i], 2);
-          const hp = this.createFilter('highpass', freqs[i], 2);
-          b.lowFilter = lp;
-          b.highFilter = hp;
+          b.lowFilter = this.createFilter('lowpass', freqs[i], 2);
+          b.highFilter = this.createFilter('highpass', freqs[i], 2);
         }
       }
       
@@ -1538,10 +1537,8 @@ class BroadcastProcessor {
         const freqs = bands.map(b => b.freq);
         for (let i = 0; i < bands.length; i++) {
           const b = bands[i];
-          const lp = this.createFilter('lowpass', freqs[i], 2);
-          const hp = this.createFilter('highpass', freqs[i], 2);
-          b.lowFilter = lp;
-          b.highFilter = hp;
+          b.lowFilter = this.createFilter('lowpass', freqs[i], 2);
+          b.highFilter = this.createFilter('highpass', freqs[i], 2);
         }
       }
       
@@ -1554,18 +1551,15 @@ class BroadcastProcessor {
       
       processFilter(filter, xL, xR) {
         if (!filter) return { yL: xL, yR: xR };
-        
         if (filter.type === 'lowpass') {
           const yL = filter.stateL + filter.alpha * (xL - filter.stateL);
           const yR = filter.stateR + filter.alpha * (xR - filter.stateR);
-          filter.stateL = yL;
-          filter.stateR = yR;
+          filter.stateL = yL; filter.stateR = yR;
           return { yL, yR };
         } else {
           const lpL = filter.stateL + filter.alpha * (xL - filter.stateL);
           const lpR = filter.stateR + filter.alpha * (xR - filter.stateR);
-          filter.stateL = lpL;
-          filter.stateR = lpR;
+          filter.stateL = lpL; filter.stateR = lpR;
           return { yL: xL - lpL, yR: xR - lpR };
         }
       }
@@ -1574,13 +1568,11 @@ class BroadcastProcessor {
         const absSig = Math.abs(signal);
         const attackCoeff = Math.exp(-1 / (attack * 0.001 * this.sampleRate));
         const releaseCoeff = Math.exp(-1 / (release * 0.001 * this.sampleRate));
-        
         if (absSig > envelope) {
           envelope = attackCoeff * envelope + (1 - attackCoeff) * absSig;
         } else {
           envelope = releaseCoeff * envelope + (1 - releaseCoeff) * absSig;
         }
-        
         const linThresh = Math.pow(10, threshold / 20);
         if (envelope > linThresh) {
           const overshoot = envelope / linThresh;
@@ -1591,7 +1583,6 @@ class BroadcastProcessor {
           const releaseCoeffSlow = Math.exp(-1 / (release * 3 * 0.001 * this.sampleRate));
           gain = Math.min(1.0, gain + (1 - gain) * (1 - releaseCoeffSlow));
         }
-        
         return { envelope, gain, output: signal * gain };
       }
       
@@ -1603,7 +1594,7 @@ class BroadcastProcessor {
       
       processPreEmphasis(x) {
         if (this.preEmphasisGain <= 0) return x;
-        const tau = this.preEmphasis === 0 ? 50e-6 : 75e-6;
+        const tau = this.preEmphasisTime === 0 ? 50e-6 : 75e-6;
         const dt = 1 / this.sampleRate;
         const alpha = dt / (tau + dt);
         const result = x + this.preEmphasisGain * (x - this.preEmphState) * alpha;
@@ -1614,7 +1605,6 @@ class BroadcastProcessor {
       process(inputs, outputs, parameters) {
         const input = inputs[0];
         const output = outputs[0];
-        
         if (!input || !input[0] || !output || !output[0]) return true;
         
         const inputL = input[0];
@@ -1631,29 +1621,25 @@ class BroadcastProcessor {
           let sL = inputL[i];
           let sR = inputR[i];
           
-          // Input level tracking
           peakIL = Math.max(peakIL, Math.abs(sL));
           peakIR = Math.max(peakIR, Math.abs(sR));
           rmsIL += sL * sL;
           rmsIR += sR * sR;
           
-          // 1. Input gain
+          // Input gain
           sL *= this.inputGain;
           sR *= this.inputGain;
           
-          // Pan - CORREGIDO: usar valores originales para ambos canales
+          // Pan
           if (this.inputPan !== 0) {
-            const panNorm = (this.inputPan + 1) * 0.5;
-            const panL = Math.cos(panNorm * Math.PI / 2);
-            const panR = Math.sin(panNorm * Math.PI / 2);
-            const origL = inputL[i] * this.inputGain;
-            const origR = inputR[i] * this.inputGain;
-            sL = origL * panL + origR * (1 - panL);
-            sR = origR * panR + origL * (1 - panR);
+            const panL = Math.cos((this.inputPan + 1) * Math.PI / 4);
+            const panR = Math.sin((this.inputPan + 1) * Math.PI / 4);
+            sL = sL * panL + sR * (1 - Math.abs(panL));
+            sR = sR * panR + sL * (1 - Math.abs(panR));
           }
           
-          // 2. EQ (6 bands) - solo si NO está en bypass
-          if (!this.bypass.eq) {
+          // EQ (6 bands) - with master bypass
+          if (this.eqMasterEnabled) {
             for (let b = 0; b < this.eqFilters.length; b++) {
               const eq = this.eqFilters[b];
               if (eq.enabled) {
@@ -1670,8 +1656,8 @@ class BroadcastProcessor {
             sR = this.applySaturation(sR);
           }
           
-          // 3. AGC - solo si NO está en bypass
-          if (!this.bypass.agc && this.agcState.enabled) {
+          // AGC - with bypass
+          if (this.agcEnabled && this.agcState.enabled) {
             const agc = this.agcState;
             const mixed = (sL + sR) / 2;
             const agcResult = this.compressSample(mixed, agc.threshold, agc.ratio, agc.attack, agc.release, this.agcEnvelope, this.agcGain);
@@ -1681,19 +1667,17 @@ class BroadcastProcessor {
             sR *= this.agcGain;
           }
           
-          // 4. Multiband Compressor (4 bands) - solo si NO está en bypass
-          if (!this.bypass.multiband4) {
+          // Multiband Compressor (4 bands) - with master bypass
+          if (this.multiband4MasterEnabled) {
             for (let b = 0; b < this.multiband4.length; b++) {
               const band = this.multiband4[b];
               if (band.enabled && band.lowFilter && band.highFilter) {
                 let lo = this.processFilter(band.lowFilter, sL, sR);
                 let hi = this.processFilter(band.highFilter, lo.yL, lo.yR);
-                
                 const mixed = (hi.yL + hi.yR) / 2;
                 const result = this.compressSample(mixed, band.threshold, band.ratio, band.attack, band.release, band.envelope, band.g);
                 band.envelope = result.envelope;
                 band.g = result.gain;
-                
                 const gainFactor = band.g * Math.pow(10, band.gain / 20);
                 sL = lo.yL + hi.yL * gainFactor;
                 sR = lo.yR + hi.yR * gainFactor;
@@ -1701,19 +1685,17 @@ class BroadcastProcessor {
             }
           }
           
-          // 5. 3-Band Compressor - solo si NO está en bypass
-          if (!this.bypass.comp3) {
+          // 3-Band Compressor - with master bypass
+          if (this.comp3MasterEnabled) {
             for (let b = 0; b < this.comp3.length; b++) {
               const band = this.comp3[b];
               if (band.enabled && band.lowFilter && band.highFilter) {
                 let lo = this.processFilter(band.lowFilter, sL, sR);
                 let hi = this.processFilter(band.highFilter, lo.yL, lo.yR);
-                
                 const mixed = (hi.yL + hi.yR) / 2;
                 const result = this.compressSample(mixed, band.threshold, band.ratio, band.attack, band.release, band.envelope, band.g);
                 band.envelope = result.envelope;
                 band.g = result.gain;
-                
                 const gainFactor = band.g * Math.pow(10, band.gain / 20);
                 sL = lo.yL + hi.yL * gainFactor;
                 sR = lo.yR + hi.yR * gainFactor;
@@ -1721,19 +1703,17 @@ class BroadcastProcessor {
             }
           }
           
-          // 6. 3-Band Limiter - solo si NO está en bypass
-          if (!this.bypass.limiter3) {
+          // 3-Band Limiter - with master bypass
+          if (this.limiter3MasterEnabled) {
             for (let b = 0; b < this.limiter3.length; b++) {
               const band = this.limiter3[b];
               if (band.enabled && band.lowFilter && band.highFilter) {
                 let lo = this.processFilter(band.lowFilter, sL, sR);
                 let hi = this.processFilter(band.highFilter, lo.yL, lo.yR);
-                
                 const mixed = (hi.yL + hi.yR) / 2;
                 const result = this.compressSample(mixed, band.threshold, band.ratio, band.attack, band.release, band.envelope, band.g);
                 band.envelope = result.envelope;
                 band.g = result.gain;
-                
                 const gainFactor = band.g * Math.pow(10, band.gain / 20);
                 sL = lo.yL + hi.yL * gainFactor;
                 sR = lo.yR + hi.yR * gainFactor;
@@ -1741,8 +1721,8 @@ class BroadcastProcessor {
             }
           }
           
-          // 7. Final Limiter - solo si NO está en bypass
-          if (!this.bypass.finalLimiter && this.finalLimiter.enabled) {
+          // Final Limiter - with bypass
+          if (this.finalLimiterEnabled && this.finalLimiter.enabled) {
             const fl = this.finalLimiter;
             const mixed = (sL + sR) / 2;
             const result = this.compressSample(mixed, fl.threshold, fl.ratio, fl.attack, fl.release, fl.envelope, fl.g);
@@ -1753,8 +1733,8 @@ class BroadcastProcessor {
             sR *= gainFactor;
           }
           
-          // 8. Power Limiter - solo si NO está en bypass
-          if (!this.bypass.powerLimiter && this.powerLimiter.enabled) {
+          // Power Limiter - with bypass
+          if (this.powerLimiterEnabled && this.powerLimiter.enabled) {
             const pl = this.powerLimiter;
             const mixed = (sL + sR) / 2;
             const result = this.compressSample(mixed, pl.threshold, pl.ratio, pl.attack, pl.release, pl.envelope, pl.g);
@@ -1765,38 +1745,33 @@ class BroadcastProcessor {
             sR *= gainFactor;
           }
           
-          // Anti-clipping con soft-knee
+          // Anti-clipping
           if (this.antiClipEnabled) {
             const maxSample = Math.max(Math.abs(sL), Math.abs(sR));
-            if (maxSample > 0.95) {
-              const knee = 0.05;
-              const over = maxSample - 0.95;
-              const reduction = over < knee 
-                ? 1 - (over / knee) * 0.5 
-                : 1 / maxSample;
-              sL *= reduction;
-              sR *= reduction;
-              if (maxSample > 1.0) clipDetected = true;
+            if (maxSample > 1.0) {
+              const reduction = 1.0 / maxSample;
+              sL *= reduction; sR *= reduction;
+              clipDetected = true;
             }
+          } else {
+            if (Math.abs(sL) > 1.0) { sL = Math.sign(sL); clipDetected = true; }
+            if (Math.abs(sR) > 1.0) { sR = Math.sign(sR); clipDetected = true; }
           }
           
-          // Pre-emphasis - solo si NO está en bypass
-          if (!this.bypass.preEmphasis && this.preEmphasisGain > 0) {
+          // Pre-emphasis - with bypass
+          if (this.preEmphasisEnabled && this.preEmphasisGain > 0) {
             sL = this.processPreEmphasis(sL);
             sR = this.processPreEmphasis(sR);
           }
           
           // Stereo processing
           if (this.stereoMode === 1) {
-            const mid = (sL + sR) / 2;
-            sL = mid;
-            sR = mid;
+            const mid = (sL + sR) / 2; sL = mid; sR = mid;
           } else if (this.stereoMode === 2) {
             const mid = (sL + sR) / 2;
             const side = (sL - sR) / 2;
             const width = this.stereoWidth;
-            sL = mid + side * width;
-            sR = mid - side * width;
+            sL = mid + side * width; sR = mid - side * width;
           } else {
             const mid = (sL + sR) / 2;
             const side = (sL - sR) / 2;
@@ -1806,22 +1781,15 @@ class BroadcastProcessor {
           
           // Balance
           if (this.stereoBalance !== 0) {
-            if (this.stereoBalance > 0) {
-              sR *= (1 - this.stereoBalance);
-            } else {
-              sL *= (1 + this.stereoBalance);
-            }
+            if (this.stereoBalance > 0) sR *= (1 - this.stereoBalance);
+            else sL *= (1 + this.stereoBalance);
           }
           
-          // Output gain
-          sL *= this.outputGain;
-          sR *= this.outputGain;
+          // Output gain & limit
+          sL *= this.outputGain * this.outputLimit;
+          sR *= this.outputGain * this.outputLimit;
           
-          // Output limiting
-          sL *= this.outputLimit;
-          sR *= this.outputLimit;
-          
-          // Final hard clip prevention
+          // Final hard clip
           sL = Math.max(-1, Math.min(1, sL));
           sR = Math.max(-1, Math.min(1, sR));
           
@@ -1845,11 +1813,7 @@ class BroadcastProcessor {
         this.frameCounter += blockSize;
         if (this.frameCounter >= this.meterUpdateInterval) {
           this.frameCounter = 0;
-          
-          const rmsToDb = (rms, n) => {
-            const val = Math.sqrt(rms / n);
-            return 20 * Math.log10(Math.max(val, 1e-10));
-          };
+          const rmsToDb = (rms, n) => 20 * Math.log10(Math.max(Math.sqrt(rms / n), 1e-10));
           
           this.meterInputL = rmsToDb(rmsIL, blockSize);
           this.meterInputR = rmsToDb(rmsIR, blockSize);
@@ -1863,18 +1827,8 @@ class BroadcastProcessor {
           
           this.port.postMessage({
             type: 'meters',
-            meters: {
-              inputL: this.meterInputL,
-              inputR: this.meterInputR,
-              outputL: this.meterOutputL,
-              outputR: this.meterOutputR
-            },
-            peaks: {
-              inputL: this.meterPeakIL,
-              inputR: this.meterPeakIR,
-              outputL: this.meterPeakOL,
-              outputR: this.meterPeakOR
-            }
+            meters: { inputL: this.meterInputL, inputR: this.meterInputR, outputL: this.meterOutputL, outputR: this.meterOutputR },
+            peaks: { inputL: this.meterPeakIL, inputR: this.meterPeakIR, outputL: this.meterPeakOL, outputR: this.meterPeakOR }
           });
           
           if (this.spectrumIdx > 0) {
@@ -1882,9 +1836,7 @@ class BroadcastProcessor {
             this.spectrumIdx = 0;
             this.port.postMessage({ type: 'spectrum', spectrum: spec });
           }
-          
           this.port.postMessage({ type: 'eqcurve', eqcurve: this.computeEQCurve() });
-          
           this.port.postMessage({
             type: 'gr',
             gr: {
@@ -1893,24 +1845,17 @@ class BroadcastProcessor {
               powerLimiter: this.powerLimiter.enabled ? 20 * Math.log10(Math.max(this.powerLimiter.g, 1e-10)) : 0
             }
           });
-          
-          if (clipDetected) {
-            this.port.postMessage({ type: 'clip' });
-          }
+          if (clipDetected) this.port.postMessage({ type: 'clip' });
         }
-        
         return true;
       }
       
       computeSpectrum(buffer) {
-        const N = buffer.length;
-        const result = new Float32Array(128);
-        const bands = 128;
+        const N = buffer.length, result = new Float32Array(128), bands = 128;
         for (let b = 0; b < bands; b++) {
           const freq = 20 * Math.pow(1000, b / bands);
           const k = Math.round(freq * N / this.sampleRate);
           if (k < 1 || k >= N/2) continue;
-          
           let re = 0, im = 0;
           const omega = 2 * Math.PI * k / N;
           for (let i = 0; i < N; i++) {
@@ -1924,27 +1869,19 @@ class BroadcastProcessor {
       }
       
       computeEQCurve() {
-        const points = 128;
-        const curve = new Float32Array(points);
-        const sr = this.sampleRate;
-        
+        const points = 128, curve = new Float32Array(points), sr = this.sampleRate;
         for (let i = 0; i < points; i++) {
           const freq = 20 * Math.pow(1000, i / points);
           let response = 0;
-          
           for (const eq of this.eqFilters) {
             if (!eq.enabled) continue;
             const omega = 2 * Math.PI * freq / sr;
-            const cosW = Math.cos(omega);
-            const sinW = Math.sin(omega);
-            const cos2W = Math.cos(2 * omega);
-            const sin2W = Math.sin(2 * omega);
-            
+            const cosW = Math.cos(omega), sinW = Math.sin(omega);
+            const cos2W = Math.cos(2 * omega), sin2W = Math.sin(2 * omega);
             const numRe = eq.b0 + eq.b1 * cosW + eq.b2 * cos2W;
             const numIm = eq.b1 * sinW + eq.b2 * sin2W;
             const denRe = 1 + eq.a1 * cosW + eq.a2 * cos2W;
             const denIm = eq.a1 * sinW + eq.a2 * sin2W;
-            
             const mag = Math.sqrt((numRe*numRe + numIm*numIm) / (denRe*denRe + denIm*denIm));
             response += 20 * Math.log10(Math.max(mag, 1e-10));
           }
@@ -1953,7 +1890,6 @@ class BroadcastProcessor {
         return curve;
       }
     }
-    
     registerProcessor('broadcast-processor', BroadcastProcessor);
     `;
   }
@@ -1971,7 +1907,6 @@ class BroadcastProcessor {
 
   sendAllParams() {
     if (!this.audioWorklet) return;
-    
     const p = this.params;
     const port = this.audioWorklet.port;
     
@@ -1987,37 +1922,32 @@ class BroadcastProcessor {
       } else if (key === 'agc') {
         port.postMessage({ type: 'agc', params: p.agc });
       } else if (key === 'multiband4') {
-        p.multiband4.forEach((band, i) => {
-          port.postMessage({ type: 'multiband4', index: i, params: band });
-        });
+        p.multiband4.forEach((band, i) => port.postMessage({ type: 'multiband4', index: i, params: band }));
       } else if (key === 'comp3') {
-        p.comp3.forEach((band, i) => {
-          port.postMessage({ type: 'comp3', index: i, params: band });
-        });
+        p.comp3.forEach((band, i) => port.postMessage({ type: 'comp3', index: i, params: band }));
       } else if (key === 'limiter3') {
-        p.limiter3.forEach((band, i) => {
-          port.postMessage({ type: 'limiter3', index: i, params: band });
-        });
+        p.limiter3.forEach((band, i) => port.postMessage({ type: 'limiter3', index: i, params: band }));
       } else if (key === 'finalLimiter') {
         port.postMessage({ type: 'finalLimiter', params: p.finalLimiter });
       } else if (key === 'powerLimiter') {
         port.postMessage({ type: 'powerLimiter', params: p.powerLimiter });
       } else if (key === 'preEmphasis') {
-        port.postMessage({ type: 'preEmphasis', value: p[key] });
-      } else if (key === 'preEmphasisGain') {
-        port.postMessage({ type: 'preEmphasisGain', value: p[key] });
+        port.postMessage({ type: 'preEmphasis', value: p[key].time });
+        port.postMessage({ type: 'preEmphasisGain', value: p[key].gain });
       } else {
         port.postMessage({ type: 'param', key: key, value: p[key] });
       }
     });
-  }
-
-  sendBypassStates() {
-    if (!this.audioWorklet) return;
-    const port = this.audioWorklet.port;
-    Object.entries(this.bypassStates).forEach(([module, enabled]) => {
-      port.postMessage({ type: 'bypass', module, enabled });
-    });
+    
+    // Send master bypass states
+    port.postMessage({ type: 'eqMaster', enabled: p.eqMaster?.enabled ?? true });
+    port.postMessage({ type: 'agcEnabled', enabled: p.agc?.enabled ?? true });
+    port.postMessage({ type: 'multiband4Master', enabled: p.multiband4Master?.enabled ?? true });
+    port.postMessage({ type: 'comp3Master', enabled: p.comp3Master?.enabled ?? true });
+    port.postMessage({ type: 'limiter3Master', enabled: p.limiter3Master?.enabled ?? true });
+    port.postMessage({ type: 'finalLimiterEnabled', enabled: p.finalLimiter?.enabled ?? true });
+    port.postMessage({ type: 'powerLimiterEnabled', enabled: p.powerLimiter?.enabled ?? true });
+    port.postMessage({ type: 'preEmphasisEnabled', enabled: p.preEmphasis?.enabled ?? true });
   }
 
   sendParam(key, value) {
@@ -2064,80 +1994,21 @@ class BroadcastProcessor {
     this.audioWorklet.port.postMessage({ type: 'powerLimiter', params });
   }
 
-  // ============================================================
-  // BYPASS SYSTEM
-  // ============================================================
-  initBypassButtons() {
-    document.querySelectorAll('.bypass-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const module = btn.dataset.bypass;
-        this.toggleBypass(module, btn);
-      });
-    });
-  }
-
-  toggleBypass(module, btn) {
-    this.bypassStates[module] = !this.bypassStates[module];
-    
-    // UI updates
-    btn.classList.toggle('active', this.bypassStates[module]);
-    
-    const panel = btn.closest('.dsp-panel');
-    if (panel) {
-      panel.classList.toggle('bypassed', this.bypassStates[module]);
-    }
-    
-    // Update band sections if applicable
-    const bandSections = panel?.querySelectorAll('.band-section');
-    if (bandSections) {
-      bandSections.forEach(section => {
-        section.classList.toggle('bypassed', this.bypassStates[module]);
-      });
-    }
-    
-    // Send to DSP
-    if (this.audioWorklet) {
-      this.audioWorklet.port.postMessage({ 
-        type: 'bypass', 
-        module, 
-        enabled: this.bypassStates[module] 
-      });
-    }
-    
-    // Visual feedback animation
-    btn.style.animation = 'none';
-    setTimeout(() => {
-      btn.style.animation = '';
-    }, 10);
-    
-    console.log(`${module} bypass: ${this.bypassStates[module] ? 'ON' : 'OFF'}`);
-  }
-
   updateMeters() {
-    const m = this.meters;
-    const p = this.peaks;
-    
+    const m = this.meters, p = this.peaks;
     ['inputL', 'inputR', 'outputL', 'outputR'].forEach(ch => {
-      if (p[ch] > this.peakHold[ch]) {
-        this.peakHold[ch] = p[ch];
-      } else {
-        this.peakHold[ch] = Math.max(this.peakHold[ch] - 0.5, p[ch]);
-      }
+      if (p[ch] > this.peakHold[ch]) this.peakHold[ch] = p[ch];
+      else this.peakHold[ch] = Math.max(this.peakHold[ch] - 0.5, p[ch]);
     });
-    
     const clampDb = (db) => Math.max(-60, Math.min(0, db));
-    
-    document.getElementById('inputMeterL').style.height = Math.max(0, ((clampDb(m.inputL) + 60) / 60 * 100)) + '%';
-    document.getElementById('inputMeterR').style.height = Math.max(0, ((clampDb(m.inputR) + 60) / 60 * 100)) + '%';
-    document.getElementById('inputPeakL').style.bottom = Math.max(0, ((clampDb(this.peakHold.inputL) + 60) / 60 * 100)) + '%';
-    document.getElementById('inputPeakR').style.bottom = Math.max(0, ((clampDb(this.peakHold.inputR) + 60) / 60 * 100)) + '%';
-    
-    document.getElementById('outputMeterL').style.height = Math.max(0, ((clampDb(m.outputL) + 60) / 60 * 100)) + '%';
-    document.getElementById('outputMeterR').style.height = Math.max(0, ((clampDb(m.outputR) + 60) / 60 * 100)) + '%';
-    document.getElementById('outputPeakL').style.bottom = Math.max(0, ((clampDb(this.peakHold.outputL) + 60) / 60 * 100)) + '%';
-    document.getElementById('outputPeakR').style.bottom = Math.max(0, ((clampDb(this.peakHold.outputR) + 60) / 60 * 100)) + '%';
-    
+    const setMeter = (id, val, peakId, peakVal) => {
+      document.getElementById(id).style.height = Math.max(0, ((clampDb(val) + 60) / 60 * 100)) + '%';
+      document.getElementById(peakId).style.bottom = Math.max(0, ((clampDb(peakVal) + 60) / 60 * 100)) + '%';
+    };
+    setMeter('inputMeterL', m.inputL, 'inputPeakL', this.peakHold.inputL);
+    setMeter('inputMeterR', m.inputR, 'inputPeakR', this.peakHold.inputR);
+    setMeter('outputMeterL', m.outputL, 'outputPeakL', this.peakHold.outputL);
+    setMeter('outputMeterR', m.outputR, 'outputPeakR', this.peakHold.outputR);
     document.getElementById('procMeterL').style.height = document.getElementById('outputMeterL').style.height;
     document.getElementById('procMeterR').style.height = document.getElementById('outputMeterR').style.height;
     document.getElementById('procPeakL').style.bottom = document.getElementById('outputPeakL').style.bottom;
@@ -2148,7 +2019,6 @@ class BroadcastProcessor {
     const agcGr = Math.max(0, Math.min(100, Math.abs(gr.agc) / 40 * 100));
     const limGr = Math.max(0, Math.min(100, Math.abs(gr.finalLimiter) / 40 * 100));
     const powLimGr = Math.max(0, Math.min(100, Math.abs(gr.powerLimiter) / 40 * 100));
-    
     document.getElementById('agcGrMeter').style.width = agcGr + '%';
     document.getElementById('limGrMeter').style.width = limGr + '%';
     document.getElementById('powLimGrMeter').style.width = powLimGr + '%';
@@ -2169,78 +2039,48 @@ class BroadcastProcessor {
   }
 
   drawSpectrum() {
-    const canvas = this.canvas;
-    const ctx = this.ctx;
-    const w = canvas.width;
-    const h = canvas.height;
-    
-    ctx.fillStyle = '#050505';
-    ctx.fillRect(0, 0, w, h);
-    
-    ctx.strokeStyle = '#1a1a1a';
-    ctx.lineWidth = 1;
+    const canvas = this.canvas, ctx = this.ctx;
+    const w = canvas.width, h = canvas.height;
+    ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 1;
     for (let i = 0; i <= 8; i++) {
       const y = (h / 8) * i;
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(w, y);
-      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
     }
-    
-    ctx.fillStyle = '#444';
-    ctx.font = '16px Courier New';
+    ctx.fillStyle = '#444'; ctx.font = '16px Courier New';
     const freqLabels = ['20', '50', '100', '200', '500', '1k', '2k', '5k', '10k', '20k'];
     freqLabels.forEach((label, i) => {
       const x = (w / (freqLabels.length - 1)) * i;
       ctx.fillText(label, x - 10, h - 5);
     });
-    
     if (!this.spectrumData || this.spectrumData.length === 0) return;
-    
-    const barWidth = w / this.spectrumData.length;
-    const minDb = -80;
-    const maxDb = 0;
-    
+    const barWidth = w / this.spectrumData.length, minDb = -80, maxDb = 0;
     for (let i = 0; i < this.spectrumData.length; i++) {
       const db = Math.max(minDb, Math.min(maxDb, this.spectrumData[i]));
       const normalizedHeight = ((db - minDb) / (maxDb - minDb));
       const barHeight = normalizedHeight * h * 0.85;
-      
       const intensity = normalizedHeight;
       let r, g, b;
-      if (intensity < 0.5) {
-        r = 0; g = Math.floor(intensity * 2 * 255); b = 0;
-      } else if (intensity < 0.8) {
-        r = Math.floor((intensity - 0.5) * 2 * 255); g = 255; b = 0;
-      } else {
-        r = 255; g = Math.floor((1 - (intensity - 0.8) * 5) * 255); b = 0;
-      }
-      
+      if (intensity < 0.5) { r = 0; g = Math.floor(intensity * 2 * 255); b = 0; }
+      else if (intensity < 0.8) { r = Math.floor((intensity - 0.5) * 2 * 255); g = 255; b = 0; }
+      else { r = 255; g = Math.floor((1 - (intensity - 0.8) * 5) * 255); b = 0; }
       ctx.fillStyle = `rgb(${r},${g},${b})`;
       ctx.fillRect(i * barWidth, h - barHeight, barWidth - 1, barHeight);
     }
-    
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = 'rgba(57,255,20,0.3)';
-    ctx.strokeStyle = 'rgba(57,255,20,0.5)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
+    ctx.shadowBlur = 10; ctx.shadowColor = 'rgba(57,255,20,0.3)';
+    ctx.strokeStyle = 'rgba(57,255,20,0.5)'; ctx.lineWidth = 2; ctx.beginPath();
     for (let i = 0; i < this.spectrumData.length; i++) {
       const db = Math.max(minDb, Math.min(maxDb, this.spectrumData[i]));
       const normalizedHeight = ((db - minDb) / (maxDb - minDb));
       const barHeight = normalizedHeight * h * 0.85;
-      const x = i * barWidth + barWidth / 2;
-      const y = h - barHeight;
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
+      const x = i * barWidth + barWidth / 2, y = h - barHeight;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     }
-    ctx.stroke();
-    ctx.shadowBlur = 0;
+    ctx.stroke(); ctx.shadowBlur = 0;
   }
 
   initEQDisplay() {
     this.eqCanvas = document.getElementById('eqCanvas');
-    if (!this.eqCanvas) return;
     this.eqCtx = this.eqCanvas.getContext('2d');
     this.eqCanvas.width = this.eqCanvas.offsetWidth * 2;
     this.eqCanvas.height = this.eqCanvas.offsetHeight * 2;
@@ -2248,88 +2088,51 @@ class BroadcastProcessor {
   }
 
   drawEQCurve() {
-    const canvas = this.eqCanvas;
-    if (!canvas) return;
-    const ctx = this.eqCtx;
-    const w = canvas.width;
-    const h = canvas.height;
-    
-    ctx.fillStyle = '#050505';
-    ctx.fillRect(0, 0, w, h);
-    
-    ctx.strokeStyle = '#1a1a1a';
-    ctx.lineWidth = 1;
+    const canvas = this.eqCanvas; if (!canvas) return;
+    const ctx = this.eqCtx, w = canvas.width, h = canvas.height;
+    ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 1;
     for (let db = -12; db <= 12; db += 3) {
       const y = h / 2 - (db / 12) * (h / 2) * 0.8;
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(w, y);
-      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
     }
-    
-    ctx.strokeStyle = '#333';
-    ctx.beginPath();
-    ctx.moveTo(0, h / 2);
-    ctx.lineTo(w, h / 2);
-    ctx.stroke();
-    
-    ctx.fillStyle = '#555';
-    ctx.font = '14px Courier New';
+    ctx.strokeStyle = '#333'; ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
+    ctx.fillStyle = '#555'; ctx.font = '14px Courier New';
     for (let db = -12; db <= 12; db += 6) {
       const y = h / 2 - (db / 12) * (h / 2) * 0.8;
       ctx.fillText((db > 0 ? '+' : '') + db + 'dB', 5, y + 4);
     }
-    
     const freqLabels = ['20', '50', '100', '200', '500', '1k', '2k', '5k', '10k', '20k'];
     freqLabels.forEach((label, i) => {
       const x = (w / (freqLabels.length - 1)) * i;
-      ctx.fillStyle = '#555';
-      ctx.fillText(label, x - 12, h - 5);
+      ctx.fillStyle = '#555'; ctx.fillText(label, x - 12, h - 5);
     });
-    
     if (!this.eqData || this.eqData.length === 0) return;
-    
-    ctx.shadowBlur = 8;
-    ctx.shadowColor = 'rgba(57,255,20,0.5)';
-    ctx.strokeStyle = '#39ff14';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    
+    ctx.shadowBlur = 8; ctx.shadowColor = 'rgba(57,255,20,0.5)';
+    ctx.strokeStyle = '#39ff14'; ctx.lineWidth = 3; ctx.beginPath();
     for (let i = 0; i < this.eqData.length; i++) {
       const db = Math.max(-12, Math.min(12, this.eqData[i]));
       const x = (i / (this.eqData.length - 1)) * w;
       const y = h / 2 - (db / 12) * (h / 2) * 0.8;
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     }
-    ctx.stroke();
-    ctx.shadowBlur = 0;
-    
-    ctx.lineTo(w, h / 2);
-    ctx.lineTo(0, h / 2);
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(57,255,20,0.05)';
-    ctx.fill();
+    ctx.stroke(); ctx.shadowBlur = 0;
+    ctx.lineTo(w, h / 2); ctx.lineTo(0, h / 2); ctx.closePath();
+    ctx.fillStyle = 'rgba(57,255,20,0.05)'; ctx.fill();
   }
 
-  // ============================================================
-  // UI INITIALIZATION
-  // ============================================================
   initUI() {
     document.getElementById('powerBtn').addEventListener('click', () => this.togglePower());
-    
     document.getElementById('configBtn').addEventListener('click', () => {
       document.getElementById('configOverlay').classList.add('visible');
     });
     document.getElementById('configClose').addEventListener('click', () => {
       document.getElementById('configOverlay').classList.remove('visible');
     });
-    
     document.getElementById('presetsBtn').addEventListener('click', () => {
       const bar = document.getElementById('presetsBar');
       bar.style.display = bar.style.display === 'none' ? 'flex' : 'none';
     });
-    
     document.querySelectorAll('.preset-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         this.loadPreset(btn.dataset.preset);
@@ -2337,12 +2140,10 @@ class BroadcastProcessor {
         btn.classList.add('active');
       });
     });
-    
     document.getElementById('modeSelect').addEventListener('change', (e) => {
       this.params.mode = e.target.value;
       this.loadPreset(e.target.value);
     });
-    
     document.querySelectorAll('.mode-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
@@ -2353,7 +2154,6 @@ class BroadcastProcessor {
         this.params.stereoMode = modeVal;
       });
     });
-    
     document.getElementById('exportBtn').addEventListener('click', () => this.exportConfig());
     document.getElementById('importBtn').addEventListener('click', () => {
       document.getElementById('importFile').click();
@@ -2361,28 +2161,69 @@ class BroadcastProcessor {
     document.getElementById('importFile').addEventListener('change', (e) => {
       this.importConfig(e.target.files[0]);
     });
-    
     ['agcMode', 'configSampleRate', 'configBufferSize', 'oversampling', 'antiClipping', 'harmonicSat'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.addEventListener('change', () => this.applyConfig());
     });
-
     document.getElementById('inputDevice').addEventListener('change', (e) => {
       this.params.inputDevice = e.target.value;
       localStorage.setItem('inputDevice', e.target.value);
       if (this.isEnabled) this.restartAudio();
     });
-
     document.getElementById('outputDevice').addEventListener('change', async (e) => {
       this.params.outputDevice = e.target.value;
       localStorage.setItem('outputDevice', e.target.value);
       if (this.audioCtx && this.audioCtx.setSinkId) {
-        try { await this.audioCtx.setSinkId(e.target.value); } 
-        catch (err) { console.error("Error setting output device:", err); }
+        try { await this.audioCtx.setSinkId(e.target.value); } catch (err) { console.error("Error setting output device:", err); }
       }
     });
-
     this.enumerateDevices();
+  }
+
+  initBypassButtons() {
+    const bypassMap = {
+      'eq': () => {
+        this.params.eqMaster.enabled = !this.params.eqMaster.enabled;
+        this.audioWorklet?.port.postMessage({ type: 'eqMaster', enabled: this.params.eqMaster.enabled });
+      },
+      'agc': () => {
+        this.params.agc.enabled = !this.params.agc.enabled;
+        this.audioWorklet?.port.postMessage({ type: 'agcEnabled', enabled: this.params.agc.enabled });
+      },
+      'multiband4': () => {
+        this.params.multiband4Master.enabled = !this.params.multiband4Master.enabled;
+        this.audioWorklet?.port.postMessage({ type: 'multiband4Master', enabled: this.params.multiband4Master.enabled });
+      },
+      'comp3': () => {
+        this.params.comp3Master.enabled = !this.params.comp3Master.enabled;
+        this.audioWorklet?.port.postMessage({ type: 'comp3Master', enabled: this.params.comp3Master.enabled });
+      },
+      'limiter3': () => {
+        this.params.limiter3Master.enabled = !this.params.limiter3Master.enabled;
+        this.audioWorklet?.port.postMessage({ type: 'limiter3Master', enabled: this.params.limiter3Master.enabled });
+      },
+      'finalLimiter': () => {
+        this.params.finalLimiter.enabled = !this.params.finalLimiter.enabled;
+        this.audioWorklet?.port.postMessage({ type: 'finalLimiterEnabled', enabled: this.params.finalLimiter.enabled });
+      },
+      'powerLimiter': () => {
+        this.params.powerLimiter.enabled = !this.params.powerLimiter.enabled;
+        this.audioWorklet?.port.postMessage({ type: 'powerLimiterEnabled', enabled: this.params.powerLimiter.enabled });
+      },
+      'preEmphasis': () => {
+        this.params.preEmphasis.enabled = !this.params.preEmphasis.enabled;
+        this.audioWorklet?.port.postMessage({ type: 'preEmphasisEnabled', enabled: this.params.preEmphasis.enabled });
+      }
+    };
+
+    document.querySelectorAll('.bypass-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const module = btn.dataset.module;
+        if (bypassMap[module]) bypassMap[module]();
+        btn.classList.toggle('active');
+        btn.textContent = btn.classList.contains('active') ? 'ACTIVE' : 'BYPASS';
+      });
+    });
   }
 
   async enumerateDevices() {
@@ -2391,21 +2232,15 @@ class BroadcastProcessor {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         stream.getTracks().forEach(track => track.stop());
       }
-      
       const devices = await navigator.mediaDevices.enumerateDevices();
       const inputSelect = document.getElementById('inputDevice');
       const outputSelect = document.getElementById('outputDevice');
-      
       if (!inputSelect || !outputSelect) return;
-      
-      inputSelect.innerHTML = '';
-      outputSelect.innerHTML = '';
-      
+      inputSelect.innerHTML = ''; outputSelect.innerHTML = '';
       devices.forEach(device => {
         const option = document.createElement('option');
         option.value = device.deviceId;
         option.textContent = device.label || `${device.kind} (${device.deviceId.substring(0, 5)})`;
-        
         if (device.kind === 'audioinput') {
           inputSelect.appendChild(option);
           if (device.deviceId === this.params.inputDevice) option.selected = true;
@@ -2414,18 +2249,12 @@ class BroadcastProcessor {
           if (device.deviceId === this.params.outputDevice) option.selected = true;
         }
       });
-    } catch (err) {
-      console.error("Error enumerating devices:", err);
-    }
+    } catch (err) { console.error("Error enumerating devices:", err); }
   }
 
   async restartAudio() {
-    if (this.inputStream) {
-      this.inputStream.getTracks().forEach(track => track.stop());
-    }
-    if (this.audioCtx) {
-      await this.audioCtx.close();
-    }
+    if (this.inputStream) this.inputStream.getTracks().forEach(track => track.stop());
+    if (this.audioCtx) await this.audioCtx.close();
     this.initAudio();
   }
 
@@ -2433,18 +2262,13 @@ class BroadcastProcessor {
     const sat = parseInt(document.getElementById('harmonicSat').value);
     this.sendParam('saturation', sat * 0.15);
     this.params.saturation = sat * 0.15;
-    
     const bufSize = parseInt(document.getElementById('configBufferSize').value);
     this.bufferSize = bufSize;
     document.getElementById('bufferSizeDisplay').textContent = bufSize + ' samples';
-    
     const latency = (bufSize / (this.audioCtx ? this.audioCtx.sampleRate : 48000) * 1000).toFixed(2);
     document.getElementById('latencyDisplay').textContent = latency + ' ms';
   }
 
-  // ============================================================
-  // KNOB INTERACTION (simplified for brevity)
-  // ============================================================
   initKnobs() {
     this.initStandardKnobs();
     this.initEQKnobs();
@@ -2464,20 +2288,15 @@ class BroadcastProcessor {
       const min = parseFloat(wrapper.dataset.min);
       const max = parseFloat(wrapper.dataset.max);
       const defaultVal = parseFloat(wrapper.dataset.default);
-      
       let currentValue = this.params[param] !== undefined ? this.params[param] : defaultVal;
-      let isDragging = false;
-      let startY = 0;
-      let startValue = 0;
+      let isDragging = false, startY = 0, startValue = 0;
       let angle = ((currentValue - min) / (max - min)) * 270 - 135;
-      
       knob.style.setProperty('--knob-angle', angle + 'deg');
       
       const updateValue = (val) => {
         currentValue = Math.max(min, Math.min(max, val));
         angle = ((currentValue - min) / (max - min)) * 270 - 135;
         knob.style.setProperty('--knob-angle', angle + 'deg');
-        
         let displayValue;
         if (param.includes('Gain') || param.includes('gain') || param.includes('threshold') || param.includes('Threshold')) {
           displayValue = currentValue.toFixed(1) + ' dB';
@@ -2497,7 +2316,7 @@ class BroadcastProcessor {
           else displayValue = 'R' + Math.round(currentValue);
         } else if (param.includes('Width') || param.includes('width')) {
           displayValue = Math.round(currentValue) + '%';
-        } else if (param.includes('preEmphasis') && param !== 'preEmphasisGain') {
+        } else if (param === 'preEmphasis') {
           displayValue = currentValue === 0 ? '50μs' : '75μs';
         } else if (param === 'stereoMode') {
           displayValue = ['ST', 'MO', 'MX'][Math.round(currentValue)];
@@ -2506,121 +2325,63 @@ class BroadcastProcessor {
         } else {
           displayValue = currentValue.toFixed(1);
         }
-        
         if (valueDisplay) valueDisplay.textContent = displayValue;
         if (!param.startsWith('eq_')) this.sendParam(param, currentValue);
       };
       
-      wrapper.addEventListener('mousedown', (e) => {
-        isDragging = true; startY = e.clientY; startValue = currentValue; e.preventDefault();
-      });
-      window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const delta = (startY - e.clientY) * ((max - min) / 200);
-        updateValue(startValue + delta);
-      });
+      wrapper.addEventListener('mousedown', (e) => { isDragging = true; startY = e.clientY; startValue = currentValue; e.preventDefault(); });
+      window.addEventListener('mousemove', (e) => { if (!isDragging) return; updateValue(startValue + (startY - e.clientY) * ((max - min) / 200)); });
       window.addEventListener('mouseup', () => { isDragging = false; });
-      wrapper.addEventListener('touchstart', (e) => {
-        isDragging = true; startY = e.touches[0].clientY; startValue = currentValue; e.preventDefault();
-      });
-      window.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const delta = (startY - e.touches[0].clientY) * ((max - min) / 200);
-        updateValue(startValue + delta);
-      });
+      wrapper.addEventListener('touchstart', (e) => { isDragging = true; startY = e.touches[0].clientY; startValue = currentValue; e.preventDefault(); });
+      window.addEventListener('touchmove', (e) => { if (!isDragging) return; updateValue(startValue + (startY - e.touches[0].clientY) * ((max - min) / 200)); });
       window.addEventListener('touchend', () => { isDragging = false; });
       wrapper.addEventListener('dblclick', () => updateValue(defaultVal));
-      wrapper.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        const delta = -e.deltaY * ((max - min) / 1000);
-        updateValue(currentValue + delta);
-      }, { passive: false });
-      
+      wrapper.addEventListener('wheel', (e) => { e.preventDefault(); updateValue(currentValue - e.deltaY * ((max - min) / 1000)); }, { passive: false });
       updateValue(currentValue);
     });
   }
 
   createKnobHTML(id, label, min, max, defaultVal, param, unit) {
-    return `
-      <div class="knob-container">
-        <div class="knob-wrapper" data-param="${param}" data-min="${min}" data-max="${max}" data-default="${defaultVal}" id="${id}">
-          <div class="knob small"></div>
-        </div>
-        <div class="knob-value">${defaultVal}${unit}</div>
-        <div class="knob-label">${label}</div>
-      </div>
-    `;
+    return `<div class="knob-container"><div class="knob-wrapper" data-param="${param}" data-min="${min}" data-max="${max}" data-default="${defaultVal}" id="${id}"><div class="knob small"></div></div><div class="knob-value">${defaultVal}${unit}</div><div class="knob-label">${label}</div></div>`;
   }
 
-  // ... [Resto de los métodos initEQKnobs, initAGCKnobs, etc. se mantienen igual]
-  // Por brevedad, se omiten pero funcionan igual que en la versión original
-
   initEQKnobs() {
-    const container = document.getElementById('eqKnobs');
-    if (!container) return;
-    
+    const container = document.getElementById('eqKnobs'); if (!container) return;
     let html = '';
     this.params.eq.forEach((eq, i) => {
       const typeOptions = ['bell', 'highpass', 'lowpass', 'highshelf', 'lowshelf'];
-      html += `
-        <div class="band-section">
-          <div class="band-title">Band ${i + 1} - ${eq.type}</div>
-          <div style="display:flex;gap:4px;justify-content:center;margin-bottom:6px;">
-            ${typeOptions.map(t => `<button class="toggle-btn ${eq.type === t ? 'active' : ''}" data-eqband="${i}" data-eqtype="${t}">${t.substring(0,3).toUpperCase()}</button>`).join('')}
-            <button class="toggle-btn ${eq.enabled ? '' : 'active'}" data-eqband="${i}" data-eqtgl="enabled">${eq.enabled ? 'ON' : 'OFF'}</button>
-          </div>
-          <div class="knobs-grid">
-            ${this.createKnobHTML(`eq_freq_${i}`, 'Freq', 20, 20000, eq.freq, `eq_freq_${i}`, ' Hz')}
-            ${this.createKnobHTML(`eq_gain_${i}`, 'Gain', -12, 12, eq.gain, `eq_gain_${i}`, ' dB')}
-            ${this.createKnobHTML(`eq_q_${i}`, 'Q', 0.1, 10, eq.q, `eq_q_${i}`, '')}
-          </div>
-        </div>
-      `;
+      html += `<div class="band-section"><div class="band-title">Band ${i + 1} - ${eq.type}</div><div style="display:flex;gap:4px;justify-content:center;margin-bottom:6px;">${typeOptions.map(t => `<button class="toggle-btn ${eq.type === t ? 'active' : ''}" data-eqband="${i}" data-eqtype="${t}">${t.substring(0,3).toUpperCase()}</button>`).join('')}<button class="toggle-btn ${eq.enabled ? '' : 'active'}" data-eqband="${i}" data-eqtgl="enabled">${eq.enabled ? 'ON' : 'OFF'}</button></div><div class="knobs-grid">${this.createKnobHTML(`eq_freq_${i}`, 'Freq', 20, 20000, eq.freq, `eq_freq_${i}`, ' Hz')}${this.createKnobHTML(`eq_gain_${i}`, 'Gain', -12, 12, eq.gain, `eq_gain_${i}`, ' dB')}${this.createKnobHTML(`eq_q_${i}`, 'Q', 0.1, 10, eq.q, `eq_q_${i}`, '')}</div></div>`;
     });
     container.innerHTML = html;
-    
     container.querySelectorAll('.knob-wrapper').forEach(wrapper => {
       const param = wrapper.dataset.param;
       const bandIdx = parseInt(param.split('_')[2]);
       const eqParam = param.split('_')[1];
-      const min = parseFloat(wrapper.dataset.min);
-      const max = parseFloat(wrapper.dataset.max);
-      const defaultVal = parseFloat(wrapper.dataset.default);
-      
+      const min = parseFloat(wrapper.dataset.min), max = parseFloat(wrapper.dataset.max), defaultVal = parseFloat(wrapper.dataset.default);
       let currentValue = this.params.eq[bandIdx][eqParam];
-      let isDragging = false;
-      let startY = 0;
-      let startValue = 0;
-      
-      const knob = wrapper.querySelector('.knob');
-      const valueDisplay = wrapper.parentElement.querySelector('.knob-value');
-      
+      let isDragging = false, startY = 0, startValue = 0;
+      const knob = wrapper.querySelector('.knob'), valueDisplay = wrapper.parentElement.querySelector('.knob-value');
       const angle = ((currentValue - min) / (max - min)) * 270 - 135;
       knob.style.setProperty('--knob-angle', angle + 'deg');
-      
       const updateValue = (val) => {
         currentValue = Math.max(min, Math.min(max, val));
         const angle = ((currentValue - min) / (max - min)) * 270 - 135;
         knob.style.setProperty('--knob-angle', angle + 'deg');
-        
         let display;
         if (eqParam === 'freq') display = currentValue >= 1000 ? (currentValue/1000).toFixed(1) + 'k' : Math.round(currentValue);
         else if (eqParam === 'gain') display = currentValue.toFixed(1) + ' dB';
         else display = currentValue.toFixed(2);
         valueDisplay.textContent = display;
-        
         this.params.eq[bandIdx][eqParam] = currentValue;
         this.sendEQ(bandIdx, eqParam, currentValue);
         this.drawEQCurve();
       };
-      
       wrapper.addEventListener('mousedown', (e) => { isDragging = true; startY = e.clientY; startValue = currentValue; e.preventDefault(); });
       window.addEventListener('mousemove', (e) => { if (!isDragging) return; updateValue(startValue + (startY - e.clientY) * ((max - min) / 200)); });
       window.addEventListener('mouseup', () => { isDragging = false; });
       wrapper.addEventListener('wheel', (e) => { e.preventDefault(); updateValue(currentValue - e.deltaY * ((max - min) / 1000)); }, { passive: false });
       wrapper.addEventListener('dblclick', () => updateValue(defaultVal));
     });
-    
     container.querySelectorAll('[data-eqtype]').forEach(btn => {
       btn.addEventListener('click', () => {
         const bandIdx = parseInt(btn.dataset.eqband);
@@ -2632,7 +2393,6 @@ class BroadcastProcessor {
         this.drawEQCurve();
       });
     });
-    
     container.querySelectorAll('[data-eqtgl]').forEach(btn => {
       btn.addEventListener('click', () => {
         const bandIdx = parseInt(btn.dataset.eqband);
@@ -2646,17 +2406,9 @@ class BroadcastProcessor {
   }
 
   initAGCKnobs() {
-    const container = document.getElementById('agcKnobs');
-    if (!container) return;
+    const container = document.getElementById('agcKnobs'); if (!container) return;
     const agc = this.params.agc;
-    container.innerHTML = `
-      <div class="knobs-grid">
-        ${this.createKnobHTML('agc_threshold', 'Threshold', -60, 0, agc.threshold, 'agc_threshold', ' dB')}
-        ${this.createKnobHTML('agc_ratio', 'Ratio', 1, 20, agc.ratio, 'agc_ratio', ':1')}
-        ${this.createKnobHTML('agc_attack', 'Attack', 0.1, 200, agc.attack, 'agc_attack', ' ms')}
-        ${this.createKnobHTML('agc_release', 'Release', 10, 2000, agc.release, 'agc_release', ' ms')}
-      </div>
-    `;
+    container.innerHTML = `<div class="knobs-grid">${this.createKnobHTML('agc_threshold', 'Threshold', -60, 0, agc.threshold, 'agc_threshold', ' dB')}${this.createKnobHTML('agc_ratio', 'Ratio', 1, 20, agc.ratio, 'agc_ratio', ':1')}${this.createKnobHTML('agc_attack', 'Attack', 0.1, 200, agc.attack, 'agc_attack', ' ms')}${this.createKnobHTML('agc_release', 'Release', 10, 2000, agc.release, 'agc_release', ' ms')}</div>`;
     this.bindKnobGroup('agc_threshold', 'threshold', agc.threshold, (v) => { this.params.agc.threshold = v; this.audioWorklet?.port.postMessage({ type: 'agc', params: this.params.agc }); });
     this.bindKnobGroup('agc_ratio', 'ratio', agc.ratio, (v) => { this.params.agc.ratio = v; this.audioWorklet?.port.postMessage({ type: 'agc', params: this.params.agc }); });
     this.bindKnobGroup('agc_attack', 'attack', agc.attack, (v) => { this.params.agc.attack = v; this.audioWorklet?.port.postMessage({ type: 'agc', params: this.params.agc }); });
@@ -2664,26 +2416,10 @@ class BroadcastProcessor {
   }
 
   initMultiband4Knobs() {
-    const container = document.getElementById('multiband4Knobs');
-    if (!container) return;
+    const container = document.getElementById('multiband4Knobs'); if (!container) return;
     let html = '';
     this.params.multiband4.forEach((band, i) => {
-      html += `
-        <div class="band-section">
-          <div class="band-title">${band.name} (Split: ${band.freq} Hz)</div>
-          <div style="display:flex;gap:4px;justify-content:center;margin-bottom:6px;">
-            <button class="toggle-btn ${band.enabled ? '' : 'active'}" data-mb4band="${i}" data-mb4tgl="enabled">${band.enabled ? 'ON' : 'OFF'}</button>
-          </div>
-          <div class="knobs-grid">
-            ${this.createKnobHTML(`mb4_freq_${i}`, 'Freq', 40, 16000, band.freq, `mb4_freq_${i}`, ' Hz')}
-            ${this.createKnobHTML(`mb4_thr_${i}`, 'Threshold', -60, 0, band.threshold, `mb4_thr_${i}`, ' dB')}
-            ${this.createKnobHTML(`mb4_rat_${i}`, 'Ratio', 1, 20, band.ratio, `mb4_rat_${i}`, ':1')}
-            ${this.createKnobHTML(`mb4_atk_${i}`, 'Attack', 0.1, 200, band.attack, `mb4_atk_${i}`, ' ms')}
-            ${this.createKnobHTML(`mb4_rel_${i}`, 'Release', 10, 2000, band.release, `mb4_rel_${i}`, ' ms')}
-            ${this.createKnobHTML(`mb4_gn_${i}`, 'Gain', -12, 12, band.gain, `mb4_gn_${i}`, ' dB')}
-          </div>
-        </div>
-      `;
+      html += `<div class="band-section"><div class="band-title">${band.name} (Split: ${band.freq} Hz)</div><div style="display:flex;gap:4px;justify-content:center;margin-bottom:6px;"><button class="toggle-btn ${band.enabled ? '' : 'active'}" data-mb4band="${i}" data-mb4tgl="enabled">${band.enabled ? 'ON' : 'OFF'}</button></div><div class="knobs-grid">${this.createKnobHTML(`mb4_freq_${i}`, 'Freq', 40, 16000, band.freq, `mb4_freq_${i}`, ' Hz')}${this.createKnobHTML(`mb4_thr_${i}`, 'Threshold', -60, 0, band.threshold, `mb4_thr_${i}`, ' dB')}${this.createKnobHTML(`mb4_rat_${i}`, 'Ratio', 1, 20, band.ratio, `mb4_rat_${i}`, ':1')}${this.createKnobHTML(`mb4_atk_${i}`, 'Attack', 0.1, 200, band.attack, `mb4_atk_${i}`, ' ms')}${this.createKnobHTML(`mb4_rel_${i}`, 'Release', 10, 2000, band.release, `mb4_rel_${i}`, ' ms')}${this.createKnobHTML(`mb4_gn_${i}`, 'Gain', -12, 12, band.gain, `mb4_gn_${i}`, ' dB')}</div></div>`;
     });
     container.innerHTML = html;
     const paramMap = { 'mb4_freq': 'freq', 'mb4_thr': 'threshold', 'mb4_rat': 'ratio', 'mb4_atk': 'attack', 'mb4_rel': 'release', 'mb4_gn': 'gain' };
@@ -2704,26 +2440,10 @@ class BroadcastProcessor {
   }
 
   initComp3Knobs() {
-    const container = document.getElementById('comp3Knobs');
-    if (!container) return;
+    const container = document.getElementById('comp3Knobs'); if (!container) return;
     let html = '';
     this.params.comp3.forEach((band, i) => {
-      html += `
-        <div class="band-section">
-          <div class="band-title">${band.name} (Split: ${band.freq} Hz)</div>
-          <div style="display:flex;gap:4px;justify-content:center;margin-bottom:6px;">
-            <button class="toggle-btn ${band.enabled ? '' : 'active'}" data-c3band="${i}" data-c3tgl="enabled">${band.enabled ? 'ON' : 'OFF'}</button>
-          </div>
-          <div class="knobs-grid">
-            ${this.createKnobHTML(`c3_freq_${i}`, 'Freq', 40, 16000, band.freq, `c3_freq_${i}`, ' Hz')}
-            ${this.createKnobHTML(`c3_thr_${i}`, 'Threshold', -60, 0, band.threshold, `c3_thr_${i}`, ' dB')}
-            ${this.createKnobHTML(`c3_rat_${i}`, 'Ratio', 1, 20, band.ratio, `c3_rat_${i}`, ':1')}
-            ${this.createKnobHTML(`c3_atk_${i}`, 'Attack', 0.1, 200, band.attack, `c3_atk_${i}`, ' ms')}
-            ${this.createKnobHTML(`c3_rel_${i}`, 'Release', 10, 2000, band.release, `c3_rel_${i}`, ' ms')}
-            ${this.createKnobHTML(`c3_gn_${i}`, 'Gain', -12, 12, band.gain, `c3_gn_${i}`, ' dB')}
-          </div>
-        </div>
-      `;
+      html += `<div class="band-section"><div class="band-title">${band.name} (Split: ${band.freq} Hz)</div><div style="display:flex;gap:4px;justify-content:center;margin-bottom:6px;"><button class="toggle-btn ${band.enabled ? '' : 'active'}" data-c3band="${i}" data-c3tgl="enabled">${band.enabled ? 'ON' : 'OFF'}</button></div><div class="knobs-grid">${this.createKnobHTML(`c3_freq_${i}`, 'Freq', 40, 16000, band.freq, `c3_freq_${i}`, ' Hz')}${this.createKnobHTML(`c3_thr_${i}`, 'Threshold', -60, 0, band.threshold, `c3_thr_${i}`, ' dB')}${this.createKnobHTML(`c3_rat_${i}`, 'Ratio', 1, 20, band.ratio, `c3_rat_${i}`, ':1')}${this.createKnobHTML(`c3_atk_${i}`, 'Attack', 0.1, 200, band.attack, `c3_atk_${i}`, ' ms')}${this.createKnobHTML(`c3_rel_${i}`, 'Release', 10, 2000, band.release, `c3_rel_${i}`, ' ms')}${this.createKnobHTML(`c3_gn_${i}`, 'Gain', -12, 12, band.gain, `c3_gn_${i}`, ' dB')}</div></div>`;
     });
     container.innerHTML = html;
     const paramMap = { 'c3_freq': 'freq', 'c3_thr': 'threshold', 'c3_rat': 'ratio', 'c3_atk': 'attack', 'c3_rel': 'release', 'c3_gn': 'gain' };
@@ -2744,26 +2464,10 @@ class BroadcastProcessor {
   }
 
   initLimiter3Knobs() {
-    const container = document.getElementById('limiter3Knobs');
-    if (!container) return;
+    const container = document.getElementById('limiter3Knobs'); if (!container) return;
     let html = '';
     this.params.limiter3.forEach((band, i) => {
-      html += `
-        <div class="band-section">
-          <div class="band-title">${band.name} (Split: ${band.freq} Hz)</div>
-          <div style="display:flex;gap:4px;justify-content:center;margin-bottom:6px;">
-            <button class="toggle-btn ${band.enabled ? '' : 'active'}" data-l3band="${i}" data-l3tgl="enabled">${band.enabled ? 'ON' : 'OFF'}</button>
-          </div>
-          <div class="knobs-grid">
-            ${this.createKnobHTML(`l3_freq_${i}`, 'Freq', 40, 16000, band.freq, `l3_freq_${i}`, ' Hz')}
-            ${this.createKnobHTML(`l3_thr_${i}`, 'Threshold', -12, 0, band.threshold, `l3_thr_${i}`, ' dB')}
-            ${this.createKnobHTML(`l3_rat_${i}`, 'Ratio', 5, 50, band.ratio, `l3_rat_${i}`, ':1')}
-            ${this.createKnobHTML(`l3_atk_${i}`, 'Attack', 0.05, 10, band.attack, `l3_atk_${i}`, ' ms')}
-            ${this.createKnobHTML(`l3_rel_${i}`, 'Release', 5, 200, band.release, `l3_rel_${i}`, ' ms')}
-            ${this.createKnobHTML(`l3_gn_${i}`, 'Gain', -6, 6, band.gain, `l3_gn_${i}`, ' dB')}
-          </div>
-        </div>
-      `;
+      html += `<div class="band-section"><div class="band-title">${band.name} (Split: ${band.freq} Hz)</div><div style="display:flex;gap:4px;justify-content:center;margin-bottom:6px;"><button class="toggle-btn ${band.enabled ? '' : 'active'}" data-l3band="${i}" data-l3tgl="enabled">${band.enabled ? 'ON' : 'OFF'}</button></div><div class="knobs-grid">${this.createKnobHTML(`l3_freq_${i}`, 'Freq', 40, 16000, band.freq, `l3_freq_${i}`, ' Hz')}${this.createKnobHTML(`l3_thr_${i}`, 'Threshold', -12, 0, band.threshold, `l3_thr_${i}`, ' dB')}${this.createKnobHTML(`l3_rat_${i}`, 'Ratio', 5, 50, band.ratio, `l3_rat_${i}`, ':1')}${this.createKnobHTML(`l3_atk_${i}`, 'Attack', 0.05, 10, band.attack, `l3_atk_${i}`, ' ms')}${this.createKnobHTML(`l3_rel_${i}`, 'Release', 5, 200, band.release, `l3_rel_${i}`, ' ms')}${this.createKnobHTML(`l3_gn_${i}`, 'Gain', -6, 6, band.gain, `l3_gn_${i}`, ' dB')}</div></div>`;
     });
     container.innerHTML = html;
     const paramMap = { 'l3_freq': 'freq', 'l3_thr': 'threshold', 'l3_rat': 'ratio', 'l3_atk': 'attack', 'l3_rel': 'release', 'l3_gn': 'gain' };
@@ -2784,18 +2488,9 @@ class BroadcastProcessor {
   }
 
   initFinalLimiterKnobs() {
-    const container = document.getElementById('finalLimiterKnobs');
-    if (!container) return;
+    const container = document.getElementById('finalLimiterKnobs'); if (!container) return;
     const fl = this.params.finalLimiter;
-    container.innerHTML = `
-      <div class="knobs-grid">
-        ${this.createKnobHTML('fl_thr', 'Threshold', -20, 0, fl.threshold, 'fl_thr', ' dB')}
-        ${this.createKnobHTML('fl_rat', 'Ratio', 5, 50, fl.ratio, 'fl_rat', ':1')}
-        ${this.createKnobHTML('fl_atk', 'Attack', 0.01, 10, fl.attack, 'fl_atk', ' ms')}
-        ${this.createKnobHTML('fl_rel', 'Release', 5, 500, fl.release, 'fl_rel', ' ms')}
-        ${this.createKnobHTML('fl_gn', 'Gain', -12, 12, fl.gain, 'fl_gn', ' dB')}
-      </div>
-    `;
+    container.innerHTML = `<div class="knobs-grid">${this.createKnobHTML('fl_thr', 'Threshold', -20, 0, fl.threshold, 'fl_thr', ' dB')}${this.createKnobHTML('fl_rat', 'Ratio', 5, 50, fl.ratio, 'fl_rat', ':1')}${this.createKnobHTML('fl_atk', 'Attack', 0.01, 10, fl.attack, 'fl_atk', ' ms')}${this.createKnobHTML('fl_rel', 'Release', 5, 500, fl.release, 'fl_rel', ' ms')}${this.createKnobHTML('fl_gn', 'Gain', -12, 12, fl.gain, 'fl_gn', ' dB')}</div>`;
     this.bindKnobGroup('fl_thr', 'threshold', fl.threshold, (v) => { this.params.finalLimiter.threshold = v; this.sendFinalLimiter({ threshold: v }); });
     this.bindKnobGroup('fl_rat', 'ratio', fl.ratio, (v) => { this.params.finalLimiter.ratio = v; this.sendFinalLimiter({ ratio: v }); });
     this.bindKnobGroup('fl_atk', 'attack', fl.attack, (v) => { this.params.finalLimiter.attack = v; this.sendFinalLimiter({ attack: v }); });
@@ -2804,18 +2499,9 @@ class BroadcastProcessor {
   }
 
   initPowerLimiterKnobs() {
-    const container = document.getElementById('powerLimiterKnobs');
-    if (!container) return;
+    const container = document.getElementById('powerLimiterKnobs'); if (!container) return;
     const pl = this.params.powerLimiter;
-    container.innerHTML = `
-      <div class="knobs-grid">
-        ${this.createKnobHTML('pl_thr', 'Threshold', -20, 0, pl.threshold, 'pl_thr', ' dB')}
-        ${this.createKnobHTML('pl_rat', 'Ratio', 5, 100, pl.ratio, 'pl_rat', ':1')}
-        ${this.createKnobHTML('pl_atk', 'Attack', 0.01, 5, pl.attack, 'pl_atk', ' ms')}
-        ${this.createKnobHTML('pl_rel', 'Release', 5, 100, pl.release, 'pl_rel', ' ms')}
-        ${this.createKnobHTML('pl_gn', 'Gain', -12, 12, pl.gain, 'pl_gn', ' dB')}
-      </div>
-    `;
+    container.innerHTML = `<div class="knobs-grid">${this.createKnobHTML('pl_thr', 'Threshold', -20, 0, pl.threshold, 'pl_thr', ' dB')}${this.createKnobHTML('pl_rat', 'Ratio', 5, 100, pl.ratio, 'pl_rat', ':1')}${this.createKnobHTML('pl_atk', 'Attack', 0.01, 5, pl.attack, 'pl_atk', ' ms')}${this.createKnobHTML('pl_rel', 'Release', 5, 100, pl.release, 'pl_rel', ' ms')}${this.createKnobHTML('pl_gn', 'Gain', -12, 12, pl.gain, 'pl_gn', ' dB')}</div>`;
     this.bindKnobGroup('pl_thr', 'threshold', pl.threshold, (v) => { this.params.powerLimiter.threshold = v; this.sendPowerLimiter({ threshold: v }); });
     this.bindKnobGroup('pl_rat', 'ratio', pl.ratio, (v) => { this.params.powerLimiter.ratio = v; this.sendPowerLimiter({ ratio: v }); });
     this.bindKnobGroup('pl_atk', 'attack', pl.attack, (v) => { this.params.powerLimiter.attack = v; this.sendPowerLimiter({ attack: v }); });
@@ -2824,19 +2510,12 @@ class BroadcastProcessor {
   }
 
   bindKnobGroup(id, param, defaultVal, onChange) {
-    const wrapper = document.getElementById(id);
-    if (!wrapper) return;
-    const knob = wrapper.querySelector('.knob');
-    const valueDisplay = wrapper.parentElement.querySelector('.knob-value');
-    const min = parseFloat(wrapper.dataset.min);
-    const max = parseFloat(wrapper.dataset.max);
-    let currentValue = defaultVal;
-    let isDragging = false;
-    let startY = 0;
-    let startValue = 0;
+    const wrapper = document.getElementById(id); if (!wrapper) return;
+    const knob = wrapper.querySelector('.knob'), valueDisplay = wrapper.parentElement.querySelector('.knob-value');
+    const min = parseFloat(wrapper.dataset.min), max = parseFloat(wrapper.dataset.max);
+    let currentValue = defaultVal, isDragging = false, startY = 0, startValue = 0;
     const angle = ((currentValue - min) / (max - min)) * 270 - 135;
     knob.style.setProperty('--knob-angle', angle + 'deg');
-    
     const updateValue = (val) => {
       currentValue = Math.max(min, Math.min(max, val));
       const angle = ((currentValue - min) / (max - min)) * 270 - 135;
@@ -2852,7 +2531,6 @@ class BroadcastProcessor {
       if (valueDisplay) valueDisplay.textContent = display;
       onChange(currentValue);
     };
-    
     wrapper.addEventListener('mousedown', (e) => { isDragging = true; startY = e.clientY; startValue = currentValue; e.preventDefault(); });
     window.addEventListener('mousemove', (e) => { if (!isDragging) return; updateValue(startValue + (startY - e.clientY) * ((max - min) / 200)); });
     window.addEventListener('mouseup', () => { isDragging = false; });
@@ -2860,9 +2538,6 @@ class BroadcastProcessor {
     wrapper.addEventListener('dblclick', () => updateValue(defaultVal));
   }
 
-  // ============================================================
-  // PRESETS
-  // ============================================================
   presets = {
     bypass: {
       name: 'Bypass',
@@ -2885,8 +2560,106 @@ class BroadcastProcessor {
       finalLimiter: {threshold:-1,ratio:20,attack:0.5,release:50,gain:0},
       powerLimiter: {threshold:-0.5,ratio:30,attack:0.1,release:20,gain:0},
       inputGain: 3, outputGain: 0
+    },
+    'fm-clean': {
+      name: 'FM Clean',
+      eq: [{type:'highpass',freq:40,gain:0,q:0.7},{type:'bell',freq:100,gain:0,q:1},{type:'bell',freq:400,gain:0,q:1},{type:'bell',freq:1000,gain:0,q:1},{type:'bell',freq:4000,gain:1,q:1},{type:'highshelf',freq:10000,gain:0,q:0.7}],
+      agc: {threshold:-22,ratio:3,attack:15,release:120},
+      multiband4: [{freq:80,threshold:-20,ratio:3,attack:20,release:100,gain:1},{freq:250,threshold:-18,ratio:2.5,attack:15,release:80,gain:0.5},{freq:2500,threshold:-16,ratio:2.5,attack:10,release:60,gain:1},{freq:8000,threshold:-14,ratio:2,attack:8,release:50,gain:0.5}],
+      comp3: [{freq:200,threshold:-22,ratio:3,attack:20,release:100,gain:0.5},{freq:2000,threshold:-20,ratio:3,attack:15,release:80,gain:0.5},{freq:8000,threshold:-18,ratio:2.5,attack:10,release:60,gain:0.5}],
+      limiter3: [{freq:200,threshold:-3,ratio:20,attack:1,release:50,gain:0},{freq:2000,threshold:-3,ratio:20,attack:1,release:40,gain:0},{freq:8000,threshold:-3,ratio:20,attack:0.5,release:30,gain:0}],
+      finalLimiter: {threshold:-1,ratio:20,attack:0.5,release:50,gain:0},
+      powerLimiter: {threshold:-0.5,ratio:30,attack:0.1,release:20,gain:0},
+      inputGain: 0, outputGain: 0
+    },
+    streaming: {
+      name: 'Streaming',
+      eq: [{type:'highpass',freq:35,gain:0,q:0.7},{type:'bell',freq:80,gain:1.5,q:1.2},{type:'bell',freq:350,gain:-0.5,q:1},{type:'bell',freq:1000,gain:0.5,q:0.8},{type:'bell',freq:3500,gain:2,q:1},{type:'highshelf',freq:12000,gain:1.5,q:0.7}],
+      agc: {threshold:-20,ratio:3,attack:12,release:100},
+      multiband4: [{freq:80,threshold:-18,ratio:3.5,attack:15,release:80,gain:1.5},{freq:250,threshold:-16,ratio:3,attack:10,release:60,gain:1},{freq:2500,threshold:-14,ratio:3,attack:8,release:50,gain:1.5},{freq:8000,threshold:-12,ratio:2.5,attack:5,release:40,gain:0.5}],
+      comp3: [{freq:200,threshold:-20,ratio:3.5,attack:15,release:80,gain:1},{freq:2000,threshold:-18,ratio:3,attack:10,release:60,gain:1},{freq:8000,threshold:-16,ratio:2.5,attack:5,release:40,gain:0.5}],
+      limiter3: [{freq:200,threshold:-3,ratio:20,attack:1,release:50,gain:0},{freq:2000,threshold:-3,ratio:20,attack:1,release:40,gain:0},{freq:8000,threshold:-3,ratio:20,attack:0.5,release:30,gain:0}],
+      finalLimiter: {threshold:-1,ratio:20,attack:0.5,release:50,gain:0},
+      powerLimiter: {threshold:-0.5,ratio:30,attack:0.1,release:20,gain:0},
+      inputGain: 2, outputGain: 0
+    },
+    podcast: {
+      name: 'Podcast',
+      eq: [{type:'highpass',freq:80,gain:0,q:1},{type:'bell',freq:150,gain:-2,q:1.5},{type:'bell',freq:400,gain:1,q:1},{type:'bell',freq:3000,gain:3,q:1.2},{type:'bell',freq:5000,gain:2,q:1},{type:'highshelf',freq:10000,gain:1,q:0.7}],
+      agc: {threshold:-18,ratio:5,attack:5,release:60},
+      multiband4: [{freq:80,threshold:-22,ratio:4,attack:10,release:60,gain:0},{freq:250,threshold:-20,ratio:3,attack:8,release:50,gain:0},{freq:2500,threshold:-18,ratio:4,attack:5,release:40,gain:2},{freq:8000,threshold:-16,ratio:2.5,attack:5,release:40,gain:1}],
+      comp3: [{freq:200,threshold:-22,ratio:4,attack:10,release:60,gain:0},{freq:2000,threshold:-20,ratio:5,attack:5,release:40,gain:2},{freq:8000,threshold:-18,ratio:3,attack:5,release:40,gain:1}],
+      limiter3: [{freq:200,threshold:-3,ratio:20,attack:1,release:50,gain:0},{freq:2000,threshold:-3,ratio:20,attack:1,release:40,gain:0},{freq:8000,threshold:-3,ratio:20,attack:0.5,release:30,gain:0}],
+      finalLimiter: {threshold:-1,ratio:20,attack:0.5,release:50,gain:0},
+      powerLimiter: {threshold:-0.5,ratio:30,attack:0.1,release:20,gain:0},
+      inputGain: 5, outputGain: 0
+    },
+    voice: {
+      name: 'Voice',
+      eq: [{type:'highpass',freq:100,gain:0,q:1},{type:'bell',freq:200,gain:-3,q:2},{type:'bell',freq:500,gain:2,q:1},{type:'bell',freq:3000,gain:4,q:1.5},{type:'bell',freq:6000,gain:2,q:1},{type:'highshelf',freq:10000,gain:1,q:0.7}],
+      agc: {threshold:-16,ratio:6,attack:3,release:50},
+      multiband4: [{freq:80,threshold:-24,ratio:4,attack:10,release:60,gain:-2},{freq:250,threshold:-20,ratio:3,attack:8,release:50,gain:0},{freq:2500,threshold:-16,ratio:5,attack:3,release:30,gain:3},{freq:8000,threshold:-14,ratio:2.5,attack:5,release:40,gain:1}],
+      comp3: [{freq:200,threshold:-22,ratio:4,attack:10,release:60,gain:-1},{freq:2000,threshold:-18,ratio:6,attack:3,release:30,gain:3},{freq:8000,threshold:-16,ratio:3,attack:5,release:40,gain:1}],
+      limiter3: [{freq:200,threshold:-3,ratio:20,attack:1,release:50,gain:0},{freq:2000,threshold:-3,ratio:20,attack:1,release:40,gain:0},{freq:8000,threshold:-3,ratio:20,attack:0.5,release:30,gain:0}],
+      finalLimiter: {threshold:-1,ratio:20,attack:0.5,release:50,gain:0},
+      powerLimiter: {threshold:-0.5,ratio:30,attack:0.1,release:20,gain:0},
+      inputGain: 6, outputGain: 0
+    },
+    music: {
+      name: 'Music',
+      eq: [{type:'highpass',freq:30,gain:0,q:0.7},{type:'bell',freq:80,gain:1,q:1.2},{type:'bell',freq:300,gain:0,q:1},{type:'bell',freq:1000,gain:0,q:1},{type:'bell',freq:4000,gain:1.5,q:1},{type:'highshelf',freq:12000,gain:2,q:0.7}],
+      agc: {threshold:-24,ratio:2.5,attack:20,release:150},
+      multiband4: [{freq:80,threshold:-20,ratio:2.5,attack:20,release:100,gain:1},{freq:250,threshold:-18,ratio:2,attack:15,release:80,gain:0.5},{freq:2500,threshold:-16,ratio:2.5,attack:10,release:60,gain:1},{freq:8000,threshold:-14,ratio:2,attack:8,release:50,gain:0.5}],
+      comp3: [{freq:200,threshold:-22,ratio:2.5,attack:20,release:100,gain:0.5},{freq:2000,threshold:-20,ratio:2.5,attack:15,release:80,gain:0.5},{freq:8000,threshold:-18,ratio:2,attack:10,release:60,gain:0.5}],
+      limiter3: [{freq:200,threshold:-3,ratio:20,attack:1,release:50,gain:0},{freq:2000,threshold:-3,ratio:20,attack:1,release:40,gain:0},{freq:8000,threshold:-3,ratio:20,attack:0.5,release:30,gain:0}],
+      finalLimiter: {threshold:-1,ratio:20,attack:0.5,release:50,gain:0},
+      powerLimiter: {threshold:-0.5,ratio:30,attack:0.1,release:20,gain:0},
+      inputGain: 0, outputGain: 0
+    },
+    rock: {
+      name: 'Rock',
+      eq: [{type:'highpass',freq:40,gain:0,q:0.7},{type:'bell',freq:80,gain:3,q:1.5},{type:'bell',freq:350,gain:-2,q:1},{type:'bell',freq:1000,gain:1,q:0.8},{type:'bell',freq:3500,gain:3,q:1.2},{type:'highshelf',freq:10000,gain:2,q:0.7}],
+      agc: {threshold:-22,ratio:4,attack:5,release:60},
+      multiband4: [{freq:80,threshold:-16,ratio:5,attack:10,release:60,gain:3},{freq:250,threshold:-14,ratio:3,attack:8,release:50,gain:1},{freq:2500,threshold:-12,ratio:4,attack:5,release:40,gain:2},{freq:8000,threshold:-10,ratio:2.5,attack:5,release:40,gain:2}],
+      comp3: [{freq:200,threshold:-18,ratio:5,attack:10,release:60,gain:2},{freq:2000,threshold:-16,ratio:4,attack:5,release:40,gain:2},{freq:8000,threshold:-14,ratio:3,attack:5,release:40,gain:2}],
+      limiter3: [{freq:200,threshold:-2,ratio:20,attack:1,release:50,gain:0},{freq:2000,threshold:-2,ratio:20,attack:1,release:40,gain:0},{freq:8000,threshold:-2,ratio:20,attack:0.5,release:30,gain:0}],
+      finalLimiter: {threshold:-0.5,ratio:20,attack:0.5,release:50,gain:0},
+      powerLimiter: {threshold:-0.3,ratio:30,attack:0.1,release:20,gain:0},
+      inputGain: 3, outputGain: 2
+    },
+    classical: {
+      name: 'Classical',
+      eq: [{type:'highpass',freq:25,gain:0,q:0.5},{type:'bell',freq:80,gain:0,q:1},{type:'bell',freq:300,gain:0,q:1},{type:'bell',freq:1000,gain:0,q:1},{type:'bell',freq:4000,gain:0,q:1},{type:'highshelf',freq:12000,gain:0,q:0.7}],
+      agc: {threshold:-30,ratio:1.5,attack:100,release:500},
+      multiband4: [{freq:80,threshold:-30,ratio:1.5,attack:30,release:150,gain:0},{freq:250,threshold:-28,ratio:1.5,attack:20,release:120,gain:0},{freq:2500,threshold:-26,ratio:1.5,attack:15,release:100,gain:0},{freq:8000,threshold:-24,ratio:1.2,attack:10,release:80,gain:0}],
+      comp3: [{freq:200,threshold:-30,ratio:1.5,attack:30,release:150,gain:0},{freq:2000,threshold:-28,ratio:1.5,attack:20,release:120,gain:0},{freq:8000,threshold:-26,ratio:1.2,attack:15,release:100,gain:0}],
+      limiter3: [{freq:200,threshold:-6,ratio:10,attack:2,release:100,gain:0},{freq:2000,threshold:-6,ratio:10,attack:2,release:80,gain:0},{freq:8000,threshold:-6,ratio:10,attack:1,release:60,gain:0}],
+      finalLimiter: {threshold:-3,ratio:10,attack:1,release:100,gain:0},
+      powerLimiter: {threshold:-2,ratio:20,attack:0.5,release:50,gain:0},
+      inputGain: 0, outputGain: 0
+    },
+    'bass-boost': {
+      name: 'Bass Boost',
+      eq: [{type:'highpass',freq:30,gain:0,q:0.7},{type:'bell',freq:60,gain:6,q:2},{type:'bell',freq:120,gain:3,q:1.5},{type:'bell',freq:400,gain:0,q:1},{type:'bell',freq:2000,gain:0,q:1},{type:'highshelf',freq:10000,gain:1,q:0.7}],
+      agc: {threshold:-20,ratio:3,attack:10,release:80},
+      multiband4: [{freq:80,threshold:-16,ratio:4,attack:15,release:80,gain:3},{freq:250,threshold:-14,ratio:3,attack:10,release:60,gain:1},{freq:2500,threshold:-12,ratio:2.5,attack:8,release:50,gain:0},{freq:8000,threshold:-10,ratio:2,attack:5,release:40,gain:0}],
+      comp3: [{freq:200,threshold:-18,ratio:4,attack:15,release:80,gain:2},{freq:2000,threshold:-16,ratio:3,attack:10,release:60,gain:0},{freq:8000,threshold:-14,ratio:2.5,attack:5,release:40,gain:0}],
+      limiter3: [{freq:200,threshold:-3,ratio:20,attack:1,release:50,gain:0},{freq:2000,threshold:-3,ratio:20,attack:1,release:40,gain:0},{freq:8000,threshold:-3,ratio:20,attack:0.5,release:30,gain:0}],
+      finalLimiter: {threshold:-1,ratio:20,attack:0.5,release:50,gain:0},
+      powerLimiter: {threshold:-0.5,ratio:30,attack:0.1,release:20,gain:0},
+      inputGain: 0, outputGain: 0
+    },
+    bright: {
+      name: 'Bright',
+      eq: [{type:'highpass',freq:60,gain:0,q:0.7},{type:'bell',freq:100,gain:-1,q:1},{type:'bell',freq:400,gain:0,q:1},{type:'bell',freq:1000,gain:1,q:0.8},{type:'bell',freq:5000,gain:4,q:1.2},{type:'highshelf',freq:10000,gain:5,q:0.7}],
+      agc: {threshold:-22,ratio:3,attack:10,release:80},
+      multiband4: [{freq:80,threshold:-20,ratio:2.5,attack:15,release:80,gain:-1},{freq:250,threshold:-18,ratio:2.5,attack:10,release:60,gain:0},{freq:2500,threshold:-16,ratio:3,attack:8,release:50,gain:2},{freq:8000,threshold:-14,ratio:2.5,attack:5,release:40,gain:3}],
+      comp3: [{freq:200,threshold:-20,ratio:2.5,attack:15,release:80,gain:-0.5},{freq:2000,threshold:-18,ratio:3,attack:10,release:60,gain:1},{freq:8000,threshold:-16,ratio:3,attack:5,release:40,gain:2}],
+      limiter3: [{freq:200,threshold:-3,ratio:20,attack:1,release:50,gain:0},{freq:2000,threshold:-3,ratio:20,attack:1,release:40,gain:0},{freq:8000,threshold:-3,ratio:20,attack:0.5,release:30,gain:0}],
+      finalLimiter: {threshold:-1,ratio:20,attack:0.5,release:50,gain:0},
+      powerLimiter: {threshold:-0.5,ratio:30,attack:0.1,release:20,gain:0},
+      inputGain: 0, outputGain: 0
     }
-    // ... otros presets se mantienen igual
   };
 
   loadPreset(name) {
@@ -2936,9 +2709,7 @@ class BroadcastProcessor {
     const blob = new Blob([config], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = 'optimod-pro-1600-config.json';
-    a.click();
+    a.href = url; a.download = 'optimod-pro-1600-config.json'; a.click();
     URL.revokeObjectURL(url);
   }
 
@@ -2963,7 +2734,6 @@ class BroadcastProcessor {
 // ============================================================
 const processor = new BroadcastProcessor();
 document.getElementById('latencyDisplay').textContent = (processor.bufferSize / 48000 * 1000).toFixed(2) + ' ms';
-
 let lastCpuCheck = performance.now();
 setInterval(() => {
   const now = performance.now();
